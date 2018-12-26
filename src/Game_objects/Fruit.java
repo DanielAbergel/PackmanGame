@@ -19,7 +19,6 @@ public class Fruit {
 	public GpsPoint _GPS; 
 	private Point3D _GPSConvert;
 	public Pixel _PixelLocation;
-	public double EatenTime ; 
 	
 	/**
 	 * This constructor build the fruit object.
@@ -35,7 +34,6 @@ public class Fruit {
 		this._value=value;
 		_GPSConvert = new Point3D(GpsLocation.getLon(),GpsLocation.getLat(),GpsLocation.getAlt());
 		this._PixelLocation = new Pixel(_GPSConvert, map);
-		EatenTime = 0 ;
 	}
 	
 	/**
@@ -52,7 +50,6 @@ public class Fruit {
 		this._value=value;
 		this._GPSConvert = new Point3D(map.Pixel2GPSPoint(PixelLocation.get_PixelX(),PixelLocation.get_PixelY()));
 		this._GPS = new GpsPoint(_GPSConvert);
-		EatenTime = 0 ; 
 	}
 	
 	/**
@@ -136,11 +133,4 @@ public class Fruit {
 		this._value = value;
 	}
 	
-	/**
-	 * This function setup the time when fruit is eaten.
-	 * @param time
-	 */
-	public void SetEatenTime(double time) {
-		EatenTime = time ;
-	}
 }

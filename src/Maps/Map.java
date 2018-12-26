@@ -128,13 +128,7 @@ public class Map
 		FrameSize.set_PixelX(p.get_PixelX());
 		FrameSize.set_PixelY(p.get_PixelY());
 
-		for (int i = 0; i < PackArr.size(); i++) {
-			for (int j = 0; j < PackArr.get(i).path.Lines.size(); j++) 
-			{
-				PackArr.get(i).path.Lines.get(j).setStartR(this);
-				PackArr.get(i).path.Lines.get(j).setEndR(this);
-			}
-		}
+		
 		for (int i = 0; i < PackArr .size(); i++) {
 			Pixel temp = GPSPoint2Pixel(new Point3D(PackArr.get(i)._GPS));
 			PackArr .get(i)._PixelLocation.set_PixelX(temp.get_PixelX());
