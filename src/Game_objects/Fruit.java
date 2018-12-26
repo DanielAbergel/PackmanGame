@@ -37,22 +37,6 @@ public class Fruit {
 	}
 	
 	/**
-	 * This constructor build the fruit object.
-	 * @param id represent the id of fruit.
-	 * @param PixelLocation represent the pixel location of the fruit.
-	 * @param value represent the value of fruit.
-	 * @param map represent the map.
-	 */
-	public Fruit(int id,Pixel PixelLocation,int value, Map map)
-	{
-		this._id=id;
-		this._PixelLocation=PixelLocation;
-		this._value=value;
-		this._GPSConvert = new Point3D(map.Pixel2GPSPoint(PixelLocation.get_PixelX(),PixelLocation.get_PixelY()));
-		this._GPS = new GpsPoint(_GPSConvert);
-	}
-	
-	/**
 	 * This function gets the GPS conversion.
 	 * @return the GPS conversion.
 	 */
