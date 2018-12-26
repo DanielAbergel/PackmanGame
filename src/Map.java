@@ -1,4 +1,4 @@
-package Maps;
+
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,10 +8,11 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
-import Coords.MyCoords;
-import Game_objects.Fruit;
-import Game_objects.Packman;
-import Geom.Point3D;
+import Robot.Fruit;
+import Robot.Packman;
+
+
+
 /**
  * 
  * @author Netanel Ben-Isahar
@@ -31,14 +32,10 @@ public class Map
 /**
  * this constructor build the map with the appropriate values.
  */
-	public Map(double StartPointLAT,double StartPointLON,double EndPointLAT,double EndPointLon)
+	public Map()
 	{
-		//might be a problem with the edges maybe should send to the constructor 
-		//arr[2],arr[6],arr[5],arr[4]
-//		StartPoint =  new Point3D(35.20234,32.10584,0); 
-//		EndPoint = new Point3D(35.21237,32.10193,0);
-		StartPoint =  new Point3D(StartPointLAT,StartPointLON,0); 
-		EndPoint = new Point3D(EndPointLAT,EndPointLon,0);
+		StartPoint =  new Point3D(35.20234,32.10584,0); 
+		EndPoint = new Point3D(35.21237,32.10193,0);
 		FrameSize = new Pixel(1433, 642);
 		StartPoint.GPS2Meter();
 		EndPoint.GPS2Meter();
@@ -125,6 +122,9 @@ public class Map
 	 * @param PackArr arraylist of packmans
 	 * @param FruitArr arraylist of fruits
 	 */
+	public void changeFrame(){
+		
+	}
 	public void ChangeFrameSizePacman(Pixel p , ArrayList<Packman> PackArr  ,ArrayList<Fruit> FruitArr)
 	{
 
@@ -133,19 +133,19 @@ public class Map
 		FrameSize.set_PixelY(p.get_PixelY());
 
 		
-		for (int i = 0; i < PackArr .size(); i++) {
-			Pixel temp = GPSPoint2Pixel(new Point3D(PackArr.get(i)._GPS));
-			PackArr .get(i)._PixelLocation.set_PixelX(temp.get_PixelX());
-			PackArr .get(i)._PixelLocation.set_PixelY(temp.get_PixelY());
-			
-		}	
-		for (int i = 0; i < FruitArr .size(); i++) {
-			Pixel temp = GPSPoint2Pixel(new Point3D(FruitArr.get(i)._GPS));
-			FruitArr .get(i)._PixelLocation.set_PixelX(temp.get_PixelX());
-			FruitArr .get(i)._PixelLocation.set_PixelY(temp.get_PixelY());
-			
-		}	
+//		for (int i = 0; i < PackArr .size(); i++) {
+//			Pixel temp = GPSPoint2Pixel(new Point3D(PackArr.get(i)._GPS));
+//			PackArr .get(i)._PixelLocation.set_PixelX(temp.get_PixelX());
+//			PackArr .get(i)._PixelLocation.set_PixelY(temp.get_PixelY());
+//			
+//		}	
+//		for (int i = 0; i < FruitArr .size(); i++) {
+//			Pixel temp = GPSPoint2Pixel(new Point3D(FruitArr.get(i)._GPS));
+//			FruitArr .get(i)._PixelLocation.set_PixelX(temp.get_PixelX());
+//			FruitArr .get(i)._PixelLocation.set_PixelY(temp.get_PixelY());
+//			
+//		}	
+//	}
+	
 	}
-	
-	
 }
