@@ -7,7 +7,7 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		MainWindow window = new MainWindow();
+		newmainwindow window = new newmainwindow();
 		window.setVisible(true);
 		window.setSize(1433,670);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

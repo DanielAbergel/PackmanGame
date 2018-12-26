@@ -7,7 +7,6 @@ import Maps.Pixel;
 
 
 import Coords.MyCoords;
-import GUI.Line;
 /**
  * 
  * @author Netanel Ben-Isahar

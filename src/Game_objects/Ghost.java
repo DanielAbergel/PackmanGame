@@ -4,6 +4,7 @@ import Geom.GpsPoint;
 import Geom.Point3D;
 import Maps.Map;
 import Maps.Pixel;
+import String2data.StringFigure;
 
 public class Ghost {
 
@@ -13,6 +14,7 @@ public class Ghost {
 	public Pixel _PixelLocation;
 	private int _speed;
 	private int _radius;
+	
 
 	/** this constructor build a Ghost.
 	 * @param id the Ghost id.

@@ -31,10 +31,14 @@ public class Map
 /**
  * this constructor build the map with the appropriate values.
  */
-	public Map()
+	public Map(double StartPointLAT,double StartPointLON,double EndPointLAT,double EndPointLon)
 	{
-		StartPoint =  new Point3D(35.20234,32.10584,0); 
-		EndPoint = new Point3D(35.21237,32.10193,0);
+		//might be a problem with the edges maybe should send to the constructor 
+		//arr[2],arr[6],arr[5],arr[4]
+//		StartPoint =  new Point3D(35.20234,32.10584,0); 
+//		EndPoint = new Point3D(35.21237,32.10193,0);
+		StartPoint =  new Point3D(StartPointLAT,StartPointLON,0); 
+		EndPoint = new Point3D(EndPointLAT,EndPointLon,0);
 		FrameSize = new Pixel(1433, 642);
 		StartPoint.GPS2Meter();
 		EndPoint.GPS2Meter();
