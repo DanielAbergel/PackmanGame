@@ -1,6 +1,3 @@
-
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -30,9 +27,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.plaf.FileChooserUI;
 
+import Robot.Fruit;
 import Robot.Game;
 import Robot.Packman;
 import Robot.Play;
+
+
 
 
 
@@ -52,7 +52,7 @@ public class MainWindow extends JFrame implements MouseListener
 
 	Game game ; 
 	boolean PacOrFruit  ;  // false = packman , true = fruit
-
+	public double d ;
 	int x = -1;
 	int y = -1;
 	public BufferedImage PackManImage;
@@ -106,11 +106,12 @@ run.addActionListener(new ActionListener() {
 	{
 		thread = new MyThread();
 		thread.start();
+	
 	}
 	private void initGUI() 
 	{	
 		InitMenu();
-		play1 = new Play("data/Ex4_OOP_example5.csv");
+		play1 = new Play("data/Ex4_OOP_example9.csv");
 		play1.setInitLocation(32.1040,35.2071);
 		play1.start();
 		map = new Map();
@@ -121,10 +122,13 @@ run.addActionListener(new ActionListener() {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		for (int i = 0; i < play1.getBoard().size(); i++) {
+			System.out.println(play1.getBoard().get(i));
+		}
 		game = new Game();
-		game.setPlayer(new Packman(play1.getBoard().get(0)));
-		
+		Packman s = new Packman((String)play1.getBoard().get(0));
+		game.setPlayer(s);
+	
 	}
 
 
@@ -136,21 +140,26 @@ run.addActionListener(new ActionListener() {
 		g.drawImage(map.myImage, -10, -10,this.getWidth(),this.getHeight(), this);
 //		map.ChangeFrameSizePacman(new Pixel(this.getWidth(), this.getHeight()), game.getRobots(),game.getTargets());
 		
-		System.out.println(game.getPlayer());
 		
+	
 		Pixel p = map.GPSPoint2Pixel(new Point3D(game.getPlayer().getLocation().lon(),game.getPlayer().getLocation().lat(),0));
-		System.out.println(p);
+		
 		g.drawImage(PackManImage,(int)(p.get_PixelX()-20),(int)(p.get_PixelY()-10),this);
 			for (int i = 0; i < game.getRobots().size(); i++) 
 			{
-				Pixel ps = map.GPSPoint2Pixel(new Point3D(game.getRobots().get(i).getLocation().lon(),game.getRobots().get(i).getLocation().lat(),0));
+				Packman s= (Packman)game.getRobots().get(i);
+				Pixel ps = map.GPSPoint2Pixel(new Point3D(s.getLocation().lon(),s.getLocation().lat(),0));
 				g.drawImage(PackManImage,(int)(ps.get_PixelX()-20),(int)(ps.get_PixelY()-10),this);
-				System.out.println(game.getRobots().get(i).toString());
 			}
 			for (int i = 0; i < game.getTargets().size(); i++) 
 			{
-				Pixel pf = map.GPSPoint2Pixel(new Point3D(game.getTargets().get(i).getLocation().lon(),game.getTargets().get(i).getLocation().lat(),0));
-				g.drawImage(FruitImage,(int)(pf.get_PixelX()-20),(int)(pf.get_PixelY()-10),this);
+				System.out.println(game.getTargets().size());
+				
+				Fruit s= (Fruit)game.getTargets().get(i);
+				
+				Pixel ps = map.GPSPoint2Pixel(new Point3D(s.getLocation().lon(),s.getLocation().lat(),0));
+			
+				g.drawImage(FruitImage,(int)(ps.get_PixelX()-20),(int)(ps.get_PixelY()-10),this);
 			}
 
 
@@ -161,17 +170,7 @@ run.addActionListener(new ActionListener() {
 	@Override
 	public void mouseClicked(MouseEvent arg) {
 		System.out.println("mouse Clicked");
-		System.out.println("("+ arg.getX() + "," + arg.getY() +")");
-//		x = arg.getX();
-//		y = arg.getY();
-//		if(!PacOrFruit) 
-//		{
-//			game.packmans.add(new Packman(0, new Pixel(x, y), 1, 0, game.GameMap));
-//		}
-//		else
-//		{
-//			game.fruits.add(new Fruit(0, new Pixel(x, y), 0, game.GameMap));
-//		}
+
 
 		repaint();
 	}
@@ -215,9 +214,9 @@ run.addActionListener(new ActionListener() {
 		@Override
 		public void run()
 		{
-			for (int i = 0; i < 15; i++) {
-				play1.rotate(36*i);
-				game.setPlayer(new Packman(play1.getBoard().get(0)));
+			for (int i = 0; i < 1000; i++) {
+				play1.rotate(360);
+				game = play1._game;
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {
