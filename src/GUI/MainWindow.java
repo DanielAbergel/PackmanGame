@@ -59,6 +59,7 @@ public class MainWindow extends JFrame implements MouseListener
 	int y = -1;
 	public BufferedImage PackManImage;
 	public BufferedImage FruitImage;
+	public BufferedImage GhostImage;
 	MyThread thread ; 
 	Play Server ; 
 	Board2Game B2G ; 
@@ -119,14 +120,15 @@ public class MainWindow extends JFrame implements MouseListener
 	{	
 		InitMenu();
 
-		Server = new Play("data//Ex4_OOP_example3.csv");
+		Server = new Play("data//Ex4_OOP_example8.csv");
 		B2G = new Board2Game();
 		Server.setInitLocation(32.1040,35.2061);
 		GameMap = new Map() ; 
 		try {
 			FruitImage = ImageIO.read(new File("Fruit.PNG"));
 			PackManImage = ImageIO.read(new File("PackMan.PNG"));
-     		GameMap.myImage = ImageIO.read(new File("Ariel1.PNG"));
+			GhostImage = ImageIO.read(new File("Ghost.PNG"));
+			GameMap.myImage = ImageIO.read(new File("Ariel1.PNG"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -147,17 +149,29 @@ public class MainWindow extends JFrame implements MouseListener
 			Packman player= (Packman)game.getPlayer();
 			Pixel layerpix = GameMap.GPSPoint2Pixel(new Point3D(player.getLocation().lat(),player.getLocation().lon(),0));
 			g.drawImage(PackManImage,(int)(layerpix.get_PixelX()-20),(int)(layerpix.get_PixelY()-10),this);
+			
+			for (int i = 0; i < game.sizeB(); i++) 
+			{
+
+
+				Pixel p1 = GameMap.GPSPoint2Pixel(new Point3D(game.getBox(i).getMax().lat(),game.getBox(i).getMax().lon()));
+
+				Pixel p2 =  GameMap.GPSPoint2Pixel(new Point3D(game.getBox(i).getMin().lat(),game.getBox(i).getMin().lon()));
+							
+				g.fillRect((int)p1.get_PixelX()-(int)(p1.get_PixelX()-p2.get_PixelX()),(int) p1.get_PixelY(), (int)(p1.get_PixelX()-p2.get_PixelX()),(int)( p2.get_PixelY()-p1.get_PixelY()));
+				
+			}
+			
 			for (int i = 0; i < game.getRobots().size(); i++) 
 			{
-			
+
 				Packman s= (Packman)game.getRobots().get(i);
 				Pixel ps = GameMap.GPSPoint2Pixel(new Point3D(s.getLocation().lat(),s.getLocation().lon(),0));
-//				System.out.println(ps);
+				//				System.out.println(ps);
 				g.drawImage(PackManImage,(int)(ps.get_PixelX()-20),(int)(ps.get_PixelY()-10),this);
 			}
 			for (int i = 0; i < game.getTargets().size(); i++) 
 			{
-				
 
 				Fruit s= (Fruit)game.getTargets().get(i);
 
@@ -165,6 +179,17 @@ public class MainWindow extends JFrame implements MouseListener
 
 				g.drawImage(FruitImage,(int)(ps.get_PixelX()-20),(int)(ps.get_PixelY()-10),this);
 			}
+			for (int i = 0; i < game.getGhosts().size(); i++) 
+			{
+
+
+				Packman s= game.getGhosts().get(i);
+
+				Pixel ps = GameMap.GPSPoint2Pixel(new Point3D(s.getLocation().lat(),s.getLocation().lon(),0));
+
+				g.drawImage(GhostImage,(int)(ps.get_PixelX()-20),(int)(ps.get_PixelY()-10),this);
+			}
+			
 		}
 
 
