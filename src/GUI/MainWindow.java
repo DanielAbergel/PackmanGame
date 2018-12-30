@@ -122,9 +122,9 @@ public class MainWindow extends JFrame implements MouseListener
 	{	
 		InitMenu();
 
-		Server = new Play("data//Ex4_OOP_example8.csv");
+		Server = new Play("data//Ex4_OOP_example5.csv");
 		B2G = new Board2Game();
-		Server.setInitLocation(32.1040,35.2061);
+//		Server.setInitLocation(32.1040,35.2061);
 		GameMap = new Map() ; 
 		try {
 			FruitImage = ImageIO.read(new File("Fruit.PNG"));
@@ -152,7 +152,7 @@ public class MainWindow extends JFrame implements MouseListener
 			Packman player= (Packman)game.getPlayer();
 			Pixel layerpix = GameMap.GPSPoint2Pixel(new Point3D(player.getLocation().lat(),player.getLocation().lon(),0));
 			g.drawImage(PlayerImage,(int)(layerpix.get_PixelX()-20),(int)(layerpix.get_PixelY()-10),this);
-			
+
 			for (int i = 0; i < game.sizeB(); i++) 
 			{
 
@@ -160,11 +160,11 @@ public class MainWindow extends JFrame implements MouseListener
 				Pixel p1 = GameMap.GPSPoint2Pixel(new Point3D(game.getBox(i).getMax().lat(),game.getBox(i).getMax().lon()));
 
 				Pixel p2 =  GameMap.GPSPoint2Pixel(new Point3D(game.getBox(i).getMin().lat(),game.getBox(i).getMin().lon()));
-							
+
 				g.fillRect((int)p1.get_PixelX()-(int)(p1.get_PixelX()-p2.get_PixelX()),(int) p1.get_PixelY(), (int)(p1.get_PixelX()-p2.get_PixelX()),(int)( p2.get_PixelY()-p1.get_PixelY()));
-				
+
 			}
-			
+
 			for (int i = 0; i < game.getRobots().size(); i++) 
 			{
 
@@ -192,7 +192,7 @@ public class MainWindow extends JFrame implements MouseListener
 
 				g.drawImage(GhostImage,(int)(ps.get_PixelX()-20),(int)(ps.get_PixelY()-10),this);
 			}
-			
+
 		}
 
 
@@ -202,6 +202,8 @@ public class MainWindow extends JFrame implements MouseListener
 	}
 	@Override
 	public void mouseClicked(MouseEvent arg) {
+		Server.setInitLocation(arg.getX(), arg.getY());
+		
 		System.out.println("mouse Clicked");
 		System.out.println("("+ arg.getX() + "," + arg.getY() +")");
 		Pixel player=GameMap.GPSPoint2Pixel(new Point3D(game.getPlayer().getLocation().lat(),game.getPlayer().getLocation().lon(),0));
@@ -221,8 +223,9 @@ public class MainWindow extends JFrame implements MouseListener
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-
 	}
+	
+
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
@@ -260,11 +263,12 @@ public class MainWindow extends JFrame implements MouseListener
 		@Override
 		public void run()
 		{
-			for (int i = 0; i < 100; i++) {
+			//for (int i = 0; i < 10000; i++) {
+			while(Server.isRuning()) {
 				Server.rotate(playerDirection);
 				ArrayList<String> s = Server.getBoard();
 				for (int j = 0; j < s.size(); j++) {
-					//System.out.println(s.get(j));
+					System.out.println(s.get(j));
 				}
 				B2G.SetGame(game, Server.getBoard());
 				try {
@@ -276,6 +280,7 @@ public class MainWindow extends JFrame implements MouseListener
 				repaint();
 			}
 			Server.stop();
+			game.getPlayer().getData();
 
 		}
 
