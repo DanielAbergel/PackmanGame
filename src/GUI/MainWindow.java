@@ -104,6 +104,7 @@ public class MainWindow extends JFrame implements MouseListener
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				Server.start();
 				move();
 			}
 		});
@@ -213,7 +214,7 @@ public class MainWindow extends JFrame implements MouseListener
 				Server.rotate(360);
 				ArrayList<String> s = Server.getBoard();
 				for (int j = 0; j < s.size(); j++) {
-					
+					System.out.println(s.get(j));
 				}
 				B2G.SetGame(game, Server.getBoard());
 				try {
@@ -224,6 +225,7 @@ public class MainWindow extends JFrame implements MouseListener
 				}
 				repaint();
 			}
+			Server.stop();
 
 		}
 
