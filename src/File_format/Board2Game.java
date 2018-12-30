@@ -78,6 +78,7 @@ public class Board2Game {
 	{
 		_game = game ; 
 		Create(Data);
+	 
 	}
 
 
