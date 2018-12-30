@@ -124,7 +124,7 @@ public class MainWindow extends JFrame implements MouseListener
 
 		Server = new Play("data//Ex4_OOP_example5.csv");
 		B2G = new Board2Game();
-//		Server.setInitLocation(32.1040,35.2061);
+		Server.setInitLocation(32.1040,35.2061);
 		GameMap = new Map() ; 
 		try {
 			FruitImage = ImageIO.read(new File("Fruit.PNG"));
@@ -202,7 +202,7 @@ public class MainWindow extends JFrame implements MouseListener
 	}
 	@Override
 	public void mouseClicked(MouseEvent arg) {
-		Server.setInitLocation(arg.getX(), arg.getY());
+//		Server.setInitLocation(arg.getX(), arg.getY());
 		
 		System.out.println("mouse Clicked");
 		System.out.println("("+ arg.getX() + "," + arg.getY() +")");
