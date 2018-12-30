@@ -60,9 +60,11 @@ public class MainWindow extends JFrame implements MouseListener
 	public BufferedImage PackManImage;
 	public BufferedImage FruitImage;
 	public BufferedImage GhostImage;
+	public BufferedImage PlayerImage;
 	MyThread thread ; 
 	Play Server ; 
 	Board2Game B2G ; 
+	int playerDirection=0;
 
 	public MainWindow() 
 	{
@@ -128,6 +130,7 @@ public class MainWindow extends JFrame implements MouseListener
 			FruitImage = ImageIO.read(new File("Fruit.PNG"));
 			PackManImage = ImageIO.read(new File("PackMan.PNG"));
 			GhostImage = ImageIO.read(new File("Ghost.PNG"));
+			PlayerImage = ImageIO.read(new File("Player.PNG"));
 			GameMap.myImage = ImageIO.read(new File("Ariel1.PNG"));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -148,7 +151,7 @@ public class MainWindow extends JFrame implements MouseListener
 		{
 			Packman player= (Packman)game.getPlayer();
 			Pixel layerpix = GameMap.GPSPoint2Pixel(new Point3D(player.getLocation().lat(),player.getLocation().lon(),0));
-			g.drawImage(PackManImage,(int)(layerpix.get_PixelX()-20),(int)(layerpix.get_PixelY()-10),this);
+			g.drawImage(PlayerImage,(int)(layerpix.get_PixelX()-20),(int)(layerpix.get_PixelY()-10),this);
 			
 			for (int i = 0; i < game.sizeB(); i++) 
 			{
@@ -201,6 +204,10 @@ public class MainWindow extends JFrame implements MouseListener
 	public void mouseClicked(MouseEvent arg) {
 		System.out.println("mouse Clicked");
 		System.out.println("("+ arg.getX() + "," + arg.getY() +")");
+		Pixel player=GameMap.GPSPoint2Pixel(new Point3D(game.getPlayer().getLocation().lat(),game.getPlayer().getLocation().lon(),0));
+
+		Pixel target=new Pixel(arg.getX(),arg.getY());
+		azimuth(player, target);
 
 		repaint();
 	}
@@ -228,6 +235,24 @@ public class MainWindow extends JFrame implements MouseListener
 		// TODO Auto-generated method stub
 
 	}
+	public void azimuth(Pixel player,Pixel target)
+	{
+		double dy=target.get_PixelX()-player.get_PixelX();
+		double dx=target.get_PixelY()-player.get_PixelY();
+		double alpha=Math.abs(Math.atan(dy/dx)*(180/Math.PI));
+
+		double azimuth;
+		if(dx<0&&dy<0)
+			azimuth=180+alpha;
+		else if(dx<0&&dy>0)
+			azimuth=180-alpha;
+		else if(dx>0&&dy<0)
+			azimuth=360-alpha;
+		else
+			azimuth=alpha;
+		playerDirection=(int)(180- azimuth);
+		//return (int)(360- azimuth);
+	}
 
 
 	public class MyThread extends Thread {
@@ -235,11 +260,11 @@ public class MainWindow extends JFrame implements MouseListener
 		@Override
 		public void run()
 		{
-			for (int i = 0; i < 20; i++) {
-				Server.rotate(360);
+			for (int i = 0; i < 100; i++) {
+				Server.rotate(playerDirection);
 				ArrayList<String> s = Server.getBoard();
 				for (int j = 0; j < s.size(); j++) {
-					System.out.println(s.get(j));
+					//System.out.println(s.get(j));
 				}
 				B2G.SetGame(game, Server.getBoard());
 				try {
