@@ -1,3 +1,6 @@
+package GUI;
+
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -27,15 +30,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.plaf.FileChooserUI;
 
-import Robot.Fruit;
+
+
+
+import Maps.Map;
+import Maps.Pixel;
 import Robot.Game;
-import Robot.Packman;
-import Robot.Play;
-
-
-
-
-
 
 
 /**
@@ -52,14 +52,12 @@ public class MainWindow extends JFrame implements MouseListener
 
 	Game game ; 
 	boolean PacOrFruit  ;  // false = packman , true = fruit
-	public double d ;
+	Map GameMap ; 
 	int x = -1;
 	int y = -1;
 	public BufferedImage PackManImage;
 	public BufferedImage FruitImage;
 	MyThread thread ; 
-	Map map;
-	Play play1 ;
 
 	public MainWindow() 
 	{
@@ -91,44 +89,34 @@ public class MainWindow extends JFrame implements MouseListener
 		gameM.add(run);
 		this.setMenuBar(menubar);
 
-run.addActionListener(new ActionListener() {
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		move();
-		
-	}
-});
-	}
 
-	
+
+
+
+		
+
+
+
+	}
 	public void move()
 	{
 		thread = new MyThread();
 		thread.start();
-	
 	}
 	private void initGUI() 
 	{	
 		InitMenu();
-		play1 = new Play("data/Ex4_OOP_example9.csv");
-		play1.setInitLocation(32.1040,35.2071);
-		play1.start();
-		map = new Map();
+
+	
 		try {
 			FruitImage = ImageIO.read(new File("Fruit.PNG"));
 			PackManImage = ImageIO.read(new File("PackMan.PNG"));
-			map.myImage = ImageIO.read(new File("Ariel1.PNG"));
+			GameMap.myImage = ImageIO.read(new File("Ariel1.PNG"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		for (int i = 0; i < play1.getBoard().size(); i++) {
-			System.out.println(play1.getBoard().get(i));
-		}
+
 		game = new Game();
-		Packman s = new Packman((String)play1.getBoard().get(0));
-		game.setPlayer(s);
-	
 	}
 
 
@@ -137,41 +125,32 @@ run.addActionListener(new ActionListener() {
 	{
 
 
-		g.drawImage(map.myImage, -10, -10,this.getWidth(),this.getHeight(), this);
-//		map.ChangeFrameSizePacman(new Pixel(this.getWidth(), this.getHeight()), game.getRobots(),game.getTargets());
-		
-		
+		g.drawImage(GameMap.myImage, -10, -10,this.getWidth(),this.getHeight(), this);
+		game.GameMap.ChangeFrameSizePacman(new Pixel(this.getWidth(), this.getHeight()), game.packmans,game.fruits);
+//		if(true)
+//		{
+//
+//			for (int i = 0; i < game.packmans.size(); i++) 
+//			{
+//
+//				g.drawImage(PackManImage,(int)game.packmans.get(i).getPixelLocation().get_PixelX()-20,(int)game.packmans.get(i).getPixelLocation().get_PixelY()-10,this);
+//			}
+//			for (int i = 0; i < game.fruits.size(); i++) 
+//			{
+//
+//				g.drawImage(FruitImage,(int)game.fruits.get(i).getPixelLocation().get_PixelX()-20,(int)game.fruits.get(i).getPixelLocation().get_PixelY()-10,this);
+//			}
+//
+//
+//
 	
-		Pixel p = map.GPSPoint2Pixel(new Point3D(game.getPlayer().getLocation().lon(),game.getPlayer().getLocation().lat(),0));
-		
-		g.drawImage(PackManImage,(int)(p.get_PixelX()-20),(int)(p.get_PixelY()-10),this);
-			for (int i = 0; i < game.getRobots().size(); i++) 
-			{
-				Packman s= (Packman)game.getRobots().get(i);
-				Pixel ps = map.GPSPoint2Pixel(new Point3D(s.getLocation().lon(),s.getLocation().lat(),0));
-				g.drawImage(PackManImage,(int)(ps.get_PixelX()-20),(int)(ps.get_PixelY()-10),this);
-			}
-			for (int i = 0; i < game.getTargets().size(); i++) 
-			{
-				System.out.println(game.getTargets().size());
-				
-				Fruit s= (Fruit)game.getTargets().get(i);
-				
-				Pixel ps = map.GPSPoint2Pixel(new Point3D(s.getLocation().lon(),s.getLocation().lat(),0));
-			
-				g.drawImage(FruitImage,(int)(ps.get_PixelX()-20),(int)(ps.get_PixelY()-10),this);
-			}
-
-
-
-
 		
 	}
 	@Override
 	public void mouseClicked(MouseEvent arg) {
 		System.out.println("mouse Clicked");
-
-
+		System.out.println("("+ arg.getX() + "," + arg.getY() +")");
+	
 		repaint();
 	}
 
@@ -199,33 +178,13 @@ run.addActionListener(new ActionListener() {
 
 	}
 
-//	public double getXsize()
-//	{
-//		return game.GameMap.myImage.getWidth();
-//	}
-
-//	public double getYsize()
-//	{
-//		return game.GameMap.myImage.getHeight();
-//	}
 
 	public class MyThread extends Thread {
 
 		@Override
 		public void run()
 		{
-			for (int i = 0; i < 1000; i++) {
-				play1.rotate(360);
-				game = play1._game;
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				repaint();
-			}
-		
+
 
 		}
 

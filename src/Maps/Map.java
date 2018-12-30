@@ -1,4 +1,4 @@
-
+package Maps;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
+import Geom.Point3D;
 import Robot.Fruit;
 import Robot.Packman;
 
@@ -122,30 +123,11 @@ public class Map
 	 * @param PackArr arraylist of packmans
 	 * @param FruitArr arraylist of fruits
 	 */
-	public void changeFrame(){
-		
-	}
-	public void ChangeFrameSizePacman(Pixel p , ArrayList<Packman> PackArr  ,ArrayList<Fruit> FruitArr)
+	public void ChangeFrameSize(Pixel p)
 	{
-
-		
 		FrameSize.set_PixelX(p.get_PixelX());
 		FrameSize.set_PixelY(p.get_PixelY());
-
-		
-//		for (int i = 0; i < PackArr .size(); i++) {
-//			Pixel temp = GPSPoint2Pixel(new Point3D(PackArr.get(i)._GPS));
-//			PackArr .get(i)._PixelLocation.set_PixelX(temp.get_PixelX());
-//			PackArr .get(i)._PixelLocation.set_PixelY(temp.get_PixelY());
-//			
-//		}	
-//		for (int i = 0; i < FruitArr .size(); i++) {
-//			Pixel temp = GPSPoint2Pixel(new Point3D(FruitArr.get(i)._GPS));
-//			FruitArr .get(i)._PixelLocation.set_PixelX(temp.get_PixelX());
-//			FruitArr .get(i)._PixelLocation.set_PixelY(temp.get_PixelY());
-//			
-//		}	
-//	}
-	
 	}
+	
+	
 }

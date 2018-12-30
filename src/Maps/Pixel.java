@@ -1,4 +1,7 @@
+package Maps;
 
+import Geom.GpsPoint;
+import Geom.Point3D;
 /**
  * 
  * @author Netanel Ben-Isahar
