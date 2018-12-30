@@ -55,8 +55,6 @@ public class MainWindow extends JFrame implements MouseListener
 	Game game ; 
 	boolean PacOrFruit  ;  // false = packman , true = fruit
 	Map GameMap ; 
-	int x = -1;
-	int y = -1;
 	public BufferedImage PackManImage;
 	public BufferedImage FruitImage;
 	public BufferedImage GhostImage;
@@ -65,6 +63,7 @@ public class MainWindow extends JFrame implements MouseListener
 	Play Server ; 
 	Board2Game B2G ; 
 	int playerDirection=0;
+	boolean ifThereRun = true;
 
 	public MainWindow() 
 	{
@@ -101,13 +100,37 @@ public class MainWindow extends JFrame implements MouseListener
 
 
 
-
+		load.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(thread != null ) thread.stop();
+				game.clear();
+				String direction="";
+				JButton open=new JButton();
+				JFileChooser fc =new JFileChooser();
+				fc.setDialogTitle("chose your game file");
+				fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				if(fc.showOpenDialog(open)==JFileChooser.APPROVE_OPTION)
+				{
+					direction=fc.getSelectedFile().getAbsolutePath();
+					System.out.println(direction);
+					direction=direction.replaceAll("\\\\", "\\\\\\\\");
+					System.out.println(direction);
+					;
+				}
+				Server = new Play(direction);
+				B2G.SetGame(game, Server.getBoard());
+				repaint();
+			}
+		});
 		run.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				Server.start();
+				ifThereRun = false ; 
 				move();
 			}
 		});
@@ -122,9 +145,9 @@ public class MainWindow extends JFrame implements MouseListener
 	{	
 		InitMenu();
 
-		Server = new Play("data//Ex4_OOP_example5.csv");
+		Server = new Play();
 		B2G = new Board2Game();
-		Server.setInitLocation(32.1040,35.2061);
+		//Server.setInitLocation(32.1040,35.2061);
 		GameMap = new Map() ; 
 		try {
 			FruitImage = ImageIO.read(new File("Fruit.PNG"));
@@ -137,6 +160,7 @@ public class MainWindow extends JFrame implements MouseListener
 		}
 
 		game = new Game();
+		Server.start();
 	}
 
 
@@ -202,15 +226,20 @@ public class MainWindow extends JFrame implements MouseListener
 	}
 	@Override
 	public void mouseClicked(MouseEvent arg) {
-//		Server.setInitLocation(arg.getX(), arg.getY());
-		
+		if(ifThereRun)
+		{
+			Point3D result=GameMap.Pixel2GPSPoint(arg.getX(), arg.getY());
+			Server.setInitLocation(result.y(), result.x());
+			
+		}else {
+
 		System.out.println("mouse Clicked");
 		System.out.println("("+ arg.getX() + "," + arg.getY() +")");
 		Pixel player=GameMap.GPSPoint2Pixel(new Point3D(game.getPlayer().getLocation().lat(),game.getPlayer().getLocation().lon(),0));
 
 		Pixel target=new Pixel(arg.getX(),arg.getY());
 		azimuth(player, target);
-
+		}
 		repaint();
 	}
 
@@ -224,7 +253,7 @@ public class MainWindow extends JFrame implements MouseListener
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 	}
-	
+
 
 
 	@Override
