@@ -17,7 +17,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -28,9 +30,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.plaf.FileChooserUI;
 
+import Coords.GeoBox;
+import Coords.LatLonAlt;
 import File_format.Board2Game;
+import File_format.Game2CSV;
 import Geom.Point3D;
 import Maps.Map;
 import Maps.Pixel;
@@ -53,7 +59,6 @@ public class MainWindow extends JFrame implements MouseListener
 
 
 	Game game ; 
-	boolean PacOrFruit  ;  // false = packman , true = fruit
 	Map GameMap ; 
 	public BufferedImage PackManImage;
 	public BufferedImage FruitImage;
@@ -62,8 +67,13 @@ public class MainWindow extends JFrame implements MouseListener
 	MyThread thread ; 
 	Play Server ; 
 	Board2Game B2G ; 
+	Game2CSV G2C ; 
+	String Box = ""; 
 	int playerDirection=0;
 	boolean ifThereRun = true;
+	char WhoAmI  = 'P'  ;  // G = Ghost  / P = Player / R = Robot / B = Box / F = Fruit 
+	
+	
 
 	public MainWindow() 
 	{
@@ -82,6 +92,9 @@ public class MainWindow extends JFrame implements MouseListener
 		MenuItem clear = new MenuItem("Clear");
 		MenuItem packmanM = new MenuItem("PackMan");
 		MenuItem fruitM = new MenuItem("Fruit");
+		MenuItem Player = new MenuItem("Player");
+		MenuItem Ghost = new MenuItem("Ghost");
+		MenuItem Box = new MenuItem("Box");
 		MenuItem run = new MenuItem("Run");
 		MenuItem KML = new MenuItem("KmlRun");
 		menubar.add(file);
@@ -90,21 +103,67 @@ public class MainWindow extends JFrame implements MouseListener
 		file.add(save);
 		file.add(clear);
 		file.add(KML);
+		gameM.add(Box);
 		gameM.add(packmanM);
 		gameM.add(fruitM);
+		gameM.add(Player);
+		gameM.add(Ghost);
 		gameM.add(run);
 		this.setMenuBar(menubar);
 
+		Box.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				WhoAmI = 'B';
+			}
+		});
+		Ghost.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				WhoAmI = 'G';
+			}
+		});
+		Player.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				WhoAmI = 'P';
+			}
+		});
+		fruitM.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				WhoAmI = 'F';
+			}
+		});
+		packmanM.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				WhoAmI = 'R' ;
+			}
+		});
+		save.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				G2C.CreateCSV(game);
+			}
+		});
 		load.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(thread != null ) thread.stop();
+				G2C.CreateCSV(game);
 				game.clear();
 				String direction="";
 				JButton open=new JButton();
@@ -129,9 +188,12 @@ public class MainWindow extends JFrame implements MouseListener
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Server.start();
-				ifThereRun = false ; 
-				move();
+				 	G2C.CreateCSV(game);
+					Server = new Play("Save.csv");
+					Server.start();
+					ifThereRun = false ; 
+					move();
+				
 			}
 		});
 
@@ -145,6 +207,8 @@ public class MainWindow extends JFrame implements MouseListener
 	{	
 		InitMenu();
 
+
+		G2C = new Game2CSV() ; 
 		Server = new Play();
 		B2G = new Board2Game();
 		//Server.setInitLocation(32.1040,35.2061);
@@ -163,24 +227,24 @@ public class MainWindow extends JFrame implements MouseListener
 		Server.start();
 	}
 
-
-
 	public void paint(Graphics g)
 	{
 
 
-		g.drawImage(GameMap.myImage, -10, -10,this.getWidth(),this.getHeight(), this);
-		GameMap.ChangeFrameSize(new Pixel(this.getWidth(), this.getHeight()));
+		g.drawImage(GameMap.myImage, 0, 0,this.getWidth(),this.getHeight(), this);
+		GameMap.ChangeFrameSize(new Pixel(ret().getWidth(), this.getHeight()));
 		if(true)
 		{
 			Packman player= (Packman)game.getPlayer();
 			Pixel layerpix = GameMap.GPSPoint2Pixel(new Point3D(player.getLocation().lat(),player.getLocation().lon(),0));
+			System.out.println(player);
 			g.drawImage(PlayerImage,(int)(layerpix.get_PixelX()-20),(int)(layerpix.get_PixelY()-10),this);
-
+			System.out.println(game.sizeB());
 			for (int i = 0; i < game.sizeB(); i++) 
 			{
 
-
+				System.out.println(new Point3D(game.getBox(i).getMax().lat(),game.getBox(i).getMax().lon()));
+				System.out.println(new Point3D(game.getBox(i).getMin().lat(),game.getBox(i).getMin().lon()));
 				Pixel p1 = GameMap.GPSPoint2Pixel(new Point3D(game.getBox(i).getMax().lat(),game.getBox(i).getMax().lon()));
 
 				Pixel p2 =  GameMap.GPSPoint2Pixel(new Point3D(game.getBox(i).getMin().lat(),game.getBox(i).getMin().lon()));
@@ -192,57 +256,93 @@ public class MainWindow extends JFrame implements MouseListener
 			for (int i = 0; i < game.getRobots().size(); i++) 
 			{
 
-				Packman s= (Packman)game.getRobots().get(i);
-				Pixel ps = GameMap.GPSPoint2Pixel(new Point3D(s.getLocation().lat(),s.getLocation().lon(),0));
+				Packman PackmanTemp= (Packman)game.getRobots().get(i);
+				Pixel PackmanPix = GameMap.GPSPoint2Pixel(new Point3D(PackmanTemp.getLocation().lat(),PackmanTemp.getLocation().lon(),0));
 				//				System.out.println(ps);
-				g.drawImage(PackManImage,(int)(ps.get_PixelX()-20),(int)(ps.get_PixelY()-10),this);
+				g.drawImage(PackManImage,(int)(PackmanPix.get_PixelX()-20),(int)(PackmanPix.get_PixelY()-10),this);
 			}
 			for (int i = 0; i < game.getTargets().size(); i++) 
 			{
 
-				Fruit s= (Fruit)game.getTargets().get(i);
+				Fruit FruitTemp= (Fruit)game.getTargets().get(i);
 
-				Pixel ps = GameMap.GPSPoint2Pixel(new Point3D(s.getLocation().lat(),s.getLocation().lon(),0));
+				Pixel FruitPix = GameMap.GPSPoint2Pixel(new Point3D(FruitTemp.getLocation().lat(),FruitTemp.getLocation().lon(),0));
 
-				g.drawImage(FruitImage,(int)(ps.get_PixelX()-20),(int)(ps.get_PixelY()-10),this);
+				g.drawImage(FruitImage,(int)(FruitPix.get_PixelX()-20),(int)(FruitPix.get_PixelY()-10),this);
 			}
 			for (int i = 0; i < game.getGhosts().size(); i++) 
 			{
 
 
-				Packman s= game.getGhosts().get(i);
+				Packman GhostTemp= game.getGhosts().get(i);
 
-				Pixel ps = GameMap.GPSPoint2Pixel(new Point3D(s.getLocation().lat(),s.getLocation().lon(),0));
+				Pixel GhostPix = GameMap.GPSPoint2Pixel(new Point3D(GhostTemp.getLocation().lat(),GhostTemp.getLocation().lon(),0));
 
-				g.drawImage(GhostImage,(int)(ps.get_PixelX()-20),(int)(ps.get_PixelY()-10),this);
+				g.drawImage(GhostImage,(int)(GhostPix.get_PixelX()-20),(int)(GhostPix.get_PixelY()-10),this);
 			}
-
 		}
+	}	
 
 
 
 
-
-	}
 	@Override
 	public void mouseClicked(MouseEvent arg) {
 		if(ifThereRun)
 		{
-			Point3D result=GameMap.Pixel2GPSPoint(arg.getX(), arg.getY());
-			Server.setInitLocation(result.y(), result.x());
-			
+			switch (WhoAmI) {
+			case 'P':
+				Point3D result=GameMap.Pixel2GPSPoint(arg.getX(), arg.getY());
+				game.setPlayer(new Packman(new LatLonAlt(result.x(),result.y(),0),1));
+				Server.setInitLocation(result.y(), result.x());
+				break;
+			case 'R':
+				Point3D resultR =GameMap.Pixel2GPSPoint(arg.getX(), arg.getY());
+				game.add(new Packman(new LatLonAlt(resultR.x(),resultR.y(),0),1));
+				break;
+			case 'G':
+				Point3D resultG=GameMap.Pixel2GPSPoint(arg.getX(), arg.getY());
+				game.addGhost(new Packman(new LatLonAlt(resultG.x(),resultG.y(),0),1));
+				break;
+			case 'F':
+				Point3D resultF=GameMap.Pixel2GPSPoint(arg.getX(), arg.getY());
+				game.add(new Fruit(new LatLonAlt(resultF.x(),resultF.y(),0)));
+				break;
+			case 'B' :
+				Point3D resultB=GameMap.Pixel2GPSPoint(arg.getX(), arg.getY());
+				Box = "B,11," + new LatLonAlt(resultB.y(),resultB.x(),0).toString() ;
+				WhoAmI = 'Q' ; 
+				break;
+			case 'Q' :
+				Point3D resultQ=GameMap.Pixel2GPSPoint(arg.getX(), arg.getY());
+				Box += "," + new LatLonAlt(resultQ.y(),resultQ.x(),0).toString() + ", " + 1 ;
+				game.add(new GeoBox(Box));
+				ArrayList<String> s = game.getGame();
+				for (int i = 0; i < s.size(); i++) {
+					System.out.println(s.get(i));
+				}
+				WhoAmI = 'B';
+
+				break;
+			default:
+				break;
+			}
+
+
 		}else {
 
-		System.out.println("mouse Clicked");
-		System.out.println("("+ arg.getX() + "," + arg.getY() +")");
-		Pixel player=GameMap.GPSPoint2Pixel(new Point3D(game.getPlayer().getLocation().lat(),game.getPlayer().getLocation().lon(),0));
+			System.out.println("mouse Clicked");
+			System.out.println("("+ arg.getX() + "," + arg.getY() +")");
+			Pixel player=GameMap.GPSPoint2Pixel(new Point3D(game.getPlayer().getLocation().lat(),game.getPlayer().getLocation().lon(),0));
 
-		Pixel target=new Pixel(arg.getX(),arg.getY());
-		azimuth(player, target);
+			Pixel target=new Pixel(arg.getX(),arg.getY());
+			azimuth(player, target);
 		}
 		repaint();
 	}
-
+	public MainWindow ret() {
+		return this ; 
+	}
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 
@@ -283,7 +383,7 @@ public class MainWindow extends JFrame implements MouseListener
 		else
 			azimuth=alpha;
 		playerDirection=(int)(180- azimuth);
-		//return (int)(360- azimuth);
+
 	}
 
 
@@ -292,13 +392,9 @@ public class MainWindow extends JFrame implements MouseListener
 		@Override
 		public void run()
 		{
-			//for (int i = 0; i < 10000; i++) {
+
 			while(Server.isRuning()) {
 				Server.rotate(playerDirection);
-				ArrayList<String> s = Server.getBoard();
-				for (int j = 0; j < s.size(); j++) {
-					System.out.println(s.get(j));
-				}
 				B2G.SetGame(game, Server.getBoard());
 				try {
 					Thread.sleep(100);
@@ -314,4 +410,5 @@ public class MainWindow extends JFrame implements MouseListener
 		}
 
 	}
+
 }
