@@ -69,6 +69,19 @@ public class Pixel {
 	{
 		return new Pixel(this._PixelX+p.get_PixelX(), this._PixelY+p.get_PixelY());
 	}
+	
+	public double  dis(Pixel p ) {
+		double dx = this._PixelX - p._PixelX;
+		double dy = this._PixelY - p._PixelY;
+		double dz = 0 ; 
+		double t = dx*dx+dy*dy + dz*dz;
+		return Math.sqrt(t);
+	}
+	
+	 
+	public boolean equals(Pixel p ) {
+		return this._PixelX == p.get_PixelX() && this._PixelY == p._PixelY;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

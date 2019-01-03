@@ -237,14 +237,13 @@ public class MainWindow extends JFrame implements MouseListener
 		{
 			Packman player= (Packman)game.getPlayer();
 			Pixel layerpix = GameMap.GPSPoint2Pixel(new Point3D(player.getLocation().lat(),player.getLocation().lon(),0));
-			System.out.println(player);
+			
 			g.drawImage(PlayerImage,(int)(layerpix.get_PixelX()-20),(int)(layerpix.get_PixelY()-10),this);
-			System.out.println(game.sizeB());
+			
 			for (int i = 0; i < game.sizeB(); i++) 
 			{
 
-				System.out.println(new Point3D(game.getBox(i).getMax().lat(),game.getBox(i).getMax().lon()));
-				System.out.println(new Point3D(game.getBox(i).getMin().lat(),game.getBox(i).getMin().lon()));
+				
 				Pixel p1 = GameMap.GPSPoint2Pixel(new Point3D(game.getBox(i).getMax().lat(),game.getBox(i).getMax().lon()));
 
 				Pixel p2 =  GameMap.GPSPoint2Pixel(new Point3D(game.getBox(i).getMin().lat(),game.getBox(i).getMin().lon()));
@@ -280,6 +279,10 @@ public class MainWindow extends JFrame implements MouseListener
 
 				g.drawImage(GhostImage,(int)(GhostPix.get_PixelX()-20),(int)(GhostPix.get_PixelY()-10),this);
 			}
+		}
+		ArrayList<String> data = game.getGame();
+		for (int i = 0; i < data.size(); i++) {
+			System.out.println(data.get(i));
 		}
 	}	
 
