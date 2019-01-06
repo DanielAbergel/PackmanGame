@@ -22,8 +22,8 @@ public class PointFinder {
 	public ArrayList<Pixel> getPixels (Game game, Map map){
 		for (int i = 0; i < game.sizeB(); i++)
 		{
-			Points.add(new Point3D(game.getBox(i).getMin().lon(),game.getBox(i).getMin().lat(),0));
-			Points.add(new Point3D(game.getBox(i).getMax().lon(),game.getBox(i).getMax().lat(),0));
+			Points.add(new Point3D(game.getBox(i).getMin().lat(),game.getBox(i).getMin().lon(),0));
+			Points.add(new Point3D(game.getBox(i).getMax().lat(),game.getBox(i).getMax().lon(),0));
 			addNearPoints(Points.get(Points.size()-2), Points.get(Points.size()-1));
 			
 		}

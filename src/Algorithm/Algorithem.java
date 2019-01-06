@@ -18,13 +18,17 @@ public class Algorithem
 {
 	ArrayList<Pixel> PixelList ;
 	ArrayList<Line2D> Lines ; 
+	public ArrayList<Pixel> PixelInclude ;
+	public ArrayList<String> shortestPath;
 
 	public Algorithem(Game game , Map map)
 	{
 		PointFinder  PF = new PointFinder() ; 
 		PixelList = PF.getPixels(game, map) ;
+		PixelInclude = new ArrayList<Pixel>();
 		Lines = new ArrayList<Line2D>();
 		UpdateLines(PixelList);
+		shortestPath = new ArrayList<String>();
 		RemovePoints();
 
 	}
@@ -36,7 +40,7 @@ public class Algorithem
 
 		System.out.println(myLocation);
 		System.out.println(destLocation);
-		ArrayList<Pixel> PixelInclude = new ArrayList<Pixel>();
+	
 		for (int i = 0; i < PixelList.size(); i++) {
 			System.out.println(PixelList.get(i));
 		}
@@ -79,7 +83,7 @@ public class Algorithem
 		System.out.println("***** Graph Demo for OOP_Ex4 *****");
 		System.out.println(b);
 		System.out.println("Dist: "+b.getDist());
-		ArrayList<String> shortestPath = b.getPath();
+		 shortestPath = b.getPath();
 		for(int i=0;i<shortestPath.size();i++) {
 			System.out.print(","+shortestPath.get(i));
 		}
@@ -161,12 +165,12 @@ public class Algorithem
 	
 	
 	public static void main(String[] args) {
-		PointFinder hw = new PointFinder() ; 
+		
 		Game game = new Game();
 		Map map = new Map();
 		game.add(new GeoBox("B,11,32.10346280397053,35.20552370064878,0.0,32.10393044420183,35.20727202866246,0.0,1.0"));
 		game.add(new GeoBox("B,11,32.102943206521985,35.206075800165465,0.0,32.10354074384279,35.20659109643439,0.0,1.0"));
-		ArrayList<Pixel> List = hw.getPixels(game , map);
+		
 
 		Algorithem A = new Algorithem(game,map);
 		A.StartAlgo(map.GPSPoint2Pixel(new Point3D(35.20519244274052,32.10376157384208,0)), map.GPSPoint2Pixel(new Point3D(35.207437661689454,32.10351476387798,0)));
