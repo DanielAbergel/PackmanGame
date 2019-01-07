@@ -3,12 +3,13 @@ package Algorithm;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import Coords.GeoBox;
+
 import Coords.MyCoords;
+import Game_objects.Game;
 import Geom.Point3D;
 import Maps.Map;
 import Maps.Pixel;
-import Robot.Game;
+
 
 public class PointFinder {
 
@@ -20,10 +21,10 @@ public class PointFinder {
 		Convert = new MyCoords() ; 
 	}
 	public ArrayList<Pixel> getPixels (Game game, Map map){
-		for (int i = 0; i < game.sizeB(); i++)
+		for (int i = 0; i < game.getGeoBoxs().size(); i++)
 		{
-			Points.add(new Point3D(game.getBox(i).getMin().lat(),game.getBox(i).getMin().lon(),0));
-			Points.add(new Point3D(game.getBox(i).getMax().lat(),game.getBox(i).getMax().lon(),0));
+			Points.add(new Point3D(game.getGeoBoxs().get(i).getStartPoint()));
+			Points.add(new Point3D(game.getGeoBoxs().get(i).getEndPoint()));
 			addNearPoints(Points.get(Points.size()-2), Points.get(Points.size()-1));
 			
 		}
@@ -50,28 +51,5 @@ public class PointFinder {
 	
 	
 	
-	public static void main(String[] args) {
-		PointFinder hw = new PointFinder() ; 
-		Game game = new Game();
-		Map map = new Map();
-		game.add(new GeoBox("B,5,32.1021493912899,35.20281754867361,0.0,32.105414027818185,35.203302498815304,0.0,1.0"));
 
-		ArrayList<Pixel> List = hw.getPixels(game , map);
-
-		for (int i = 0; i < List.size(); i++) {
-			System.out.println( List.get(i));
-		}
-	}
 }
-/*
- * for (int i = 0; i < PointPix.size(); i=i+4) {
-			PointPix.get(i).set_PixelX(PointPix.get(i).get_PixelX()+1);
-			PointPix.get(i).set_PixelY(PointPix.get(i).get_PixelY()-1);
-			PointPix.get(i+1).set_PixelX(PointPix.get(i+1).get_PixelX()+1);
-			PointPix.get(i+1).set_PixelY(PointPix.get(i+1).get_PixelY()+1);
-			PointPix.get(i+2).set_PixelX(PointPix.get(i+2).get_PixelX()+1);
-			PointPix.get(i+2).set_PixelY(PointPix.get(i+2).get_PixelY()-1);
-			PointPix.get(i+3).set_PixelX(PointPix.get(i+3).get_PixelX()-1);
-			PointPix.get(i+3).set_PixelY(PointPix.get(i+3).get_PixelY()+1);
-		}
-*/

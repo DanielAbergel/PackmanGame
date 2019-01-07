@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import Robot.Game;
+import Game_objects.Game;
+
+
 
 public class Game2CSV {
 
@@ -19,14 +21,13 @@ public class Game2CSV {
 
 			StringBuilder sb = new StringBuilder() ; 
 			sb.append("Type,ID,Lat,Lon,Alt,Speed/Weight,Radius \n");
-			ArrayList<String> data= game.getGame();
-			for (int i = 0; i <data.size(); i++) {
-				sb.append(data.get(i) + "\n");
-			}
-
+			StringBuilder SB = game.getGame();
+			sb.append(SB);
+			
 			pw.write(sb.toString());
 			pw.close();
 			System.out.println("done!");
+			System.out.println(SB.toString());
 		} catch (FileNotFoundException e1) {
 
 			e1.printStackTrace();

@@ -16,6 +16,6 @@ public class Player extends General {
 	}
 	@Override
 	public String toString() {
-		return "M," + Gps.toString() ;
+		return "M,1," + Gps.toString() + ",20,1"  ;
 	}
 }

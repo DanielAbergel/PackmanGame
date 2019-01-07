@@ -6,6 +6,7 @@ import Maps.Pixel;
 
 public class Fruit extends General{
 
+	static int size = 0 ; 
 	public Fruit(Pixel pixel, Map map) 
 	{
 		super(pixel, map);
@@ -16,6 +17,6 @@ public class Fruit extends General{
 		super(Gps, map);
 	}
 	public String toString() {
-		return "F," + Gps.toString() ;
+		return "F," + size + "," + Gps.toString() + ",1" ;
 	}
 }

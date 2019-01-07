@@ -38,6 +38,6 @@ public class GeoBox {
 		return StartPoint;
 	}
 	public String toString() {
-		return "B," + StartPoint.toString() + " , " + EndPoint.toString() ;
+		return "B,1," + StartPoint.toString() + " , " + EndPoint.toString()  + ",1";
 	}
 }

@@ -5,11 +5,12 @@ import java.awt.geom.Line2D.Double;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import Coords.GeoBox;
+import Game_objects.Game;
+import Game_objects.GeoBox;
 import Geom.Point3D;
 import Maps.Map;
 import Maps.Pixel;
-import Robot.Game;
+
 import graph.Graph;
 import graph.Graph_Algo;
 import graph.Node;
@@ -30,7 +31,6 @@ public class Algorithem
 		UpdateLines(PixelList);
 		shortestPath = new ArrayList<String>();
 		RemovePoints();
-
 	}
 
 
@@ -168,8 +168,10 @@ public class Algorithem
 		
 		Game game = new Game();
 		Map map = new Map();
-		game.add(new GeoBox("B,11,32.10346280397053,35.20552370064878,0.0,32.10393044420183,35.20727202866246,0.0,1.0"));
-		game.add(new GeoBox("B,11,32.102943206521985,35.206075800165465,0.0,32.10354074384279,35.20659109643439,0.0,1.0"));
+	
+		game.getGeoBoxs().add(new GeoBox(new Point3D(35.20552370064878,32.10346280397053,0),new Point3D(35.20727202866246,32.10393044420183,0),map));
+		game.getGeoBoxs().add(new GeoBox(new Point3D(35.206075800165465,32.102943206521985,0),new Point3D(35.20659109643439,32.10354074384279,0),map));
+	
 		
 
 		Algorithem A = new Algorithem(game,map);
