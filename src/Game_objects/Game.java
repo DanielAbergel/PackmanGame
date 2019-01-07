@@ -6,7 +6,7 @@ import File_format.Board2Game;
 import Maps.Map;
 import Maps.Pixel;
 
-public class Game 
+public  class Game 
 {
 	ArrayList<Ghost> Ghosts ; 
 	ArrayList<GeoBox> GeoBoxs ; 
@@ -26,57 +26,57 @@ public class Game
 		player = new Player(new Pixel(0,0),GameMap);
 		B2G = new Board2Game();
 	}
-	public ArrayList<Fruit> getFruits() {
+	public synchronized ArrayList<Fruit> getFruits() {
 		return Fruits;
 	}
-	public Player getPlayer() {
+	public synchronized  Player getPlayer() {
 		return player;
 	}
-	public Map getGameMap() {
+	public synchronized Map getGameMap() {
 		return GameMap;
 	}
-	public ArrayList<GeoBox> getGeoBoxs() {
+	public synchronized ArrayList<GeoBox> getGeoBoxs() {
 		return GeoBoxs;
 	}
-	public ArrayList<Packman> getPackmans() {
+	public synchronized ArrayList<Packman> getPackmans() {
 		return Packmans;
 	}
-	public ArrayList<Ghost> getGhosts() {
+	public synchronized ArrayList<Ghost> getGhosts() {
 		return Ghosts;
 	}
 	
-	public void setGame(ArrayList<String> Data)
+	 public synchronized void setGame(ArrayList<String> Data)
 	{
 		B2G.SetGame(this, Data,getGameMap());
 	}
-	public void clear()
+	public  synchronized void clear()
 	{
 		GeoBoxs.clear();
 		Packmans.clear();
 		Ghosts.clear();
 		Fruits.clear();
 	}
-	public void setPlayer(Player player) {
+	public synchronized void setPlayer(Player player) {
 		this.player = player;
 	}
-	public void addFruit(Fruit F) {
+	public synchronized void addFruit(Fruit F) {
 		// TODO Auto-generated method stub
 		this.Fruits.add(F);
 	}
-	public void addPackman(Packman P) {
+	public synchronized  void addPackman(Packman P) {
 		// TODO Auto-generated method stub
 		this.Packmans.add(P);
 	}
-	public void addGhost(Ghost G) {
+	public synchronized void addGhost(Ghost G) {
 		// TODO Auto-generated method stub
 		this.Ghosts.add(G);
 	}
-	public void addGeoBox(GeoBox B) {
+	public synchronized void addGeoBox(GeoBox B) {
 		// TODO Auto-generated method stub
 		this.GeoBoxs.add(B);
 	}
 	
-	public StringBuilder getGame(){
+	public synchronized StringBuilder getGame(){
 		StringBuilder SB = new StringBuilder();
 //		SB.append(getPlayer().toString() + "\n");
 		for (int i = 0; i < Packmans.size(); i++) 

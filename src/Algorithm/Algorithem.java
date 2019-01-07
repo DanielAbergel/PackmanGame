@@ -22,14 +22,18 @@ public class Algorithem
 	public ArrayList<Pixel> PixelInclude ;
 	public ArrayList<String> shortestPath;
 
+	public ArrayList<Point3D> point3DInclude;
+	Map map ; 
 	public Algorithem(Game game , Map map)
 	{
 		PointFinder  PF = new PointFinder() ; 
+		point3DInclude = new ArrayList<Point3D>();
 		PixelList = PF.getPixels(game, map) ;
 		PixelInclude = new ArrayList<Pixel>();
 		Lines = new ArrayList<Line2D>();
 		UpdateLines(PixelList);
 		shortestPath = new ArrayList<String>();
+		this.map = map;
 		RemovePoints();
 	}
 
@@ -47,8 +51,11 @@ public class Algorithem
 		PixelInclude.add(myLocation);
 		PixelInclude.addAll(PixelList);
 		PixelInclude.add(destLocation);
-		int size = PixelInclude.size() ; 
-
+		int size = PixelInclude.size() ;
+		for (int i = 0; i < PixelInclude.size(); i++) {
+			point3DInclude.add(new Point3D(map.Pixel2GPSPoint(PixelInclude.get(i).get_PixelX(), PixelInclude.get(i).get_PixelY())));
+			
+		}
 
 		Graph G = new Graph();
 		String Source = "0";
@@ -87,6 +94,7 @@ public class Algorithem
 		for(int i=0;i<shortestPath.size();i++) {
 			System.out.print(","+shortestPath.get(i));
 		}
+		
 	}
 
 	

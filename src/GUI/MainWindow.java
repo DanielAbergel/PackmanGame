@@ -65,7 +65,7 @@ public class MainWindow extends JFrame implements MouseListener
 
 
 	Game game ; 
-	
+
 	public BufferedImage PackManImage;
 	public BufferedImage FruitImage;
 	public BufferedImage GhostImage;
@@ -74,8 +74,8 @@ public class MainWindow extends JFrame implements MouseListener
 	Play Server ; 
 	Board2Game B2G ; 
 	Game2CSV G2C ; 
-	
-	int playerDirection=0;
+
+	double playerDirection=0;
 	boolean ifThereRun = true;
 	char WhoAmI  = 'P'  ;  // G = Ghost  / P = Player / R = Robot / B = Box / F = Fruit 
 	Algorithem algo ;
@@ -132,7 +132,7 @@ public class MainWindow extends JFrame implements MouseListener
 				Server = new Play("Save.csv");
 				Server.setInitLocation(game.getPlayer().getGps().y(),game.getPlayer().getGps().x());
 				algo=new Algorithem(game, game.getGameMap());
-				
+
 				algo.StartAlgo(game.getGameMap().GPSPoint2Pixel(game.getPlayer().getGps()),game.getGameMap().GPSPoint2Pixel(game.getFruits().get(0).getGps()));
 
 
@@ -215,7 +215,7 @@ public class MainWindow extends JFrame implements MouseListener
 				}
 				Server = new Play(direction);
 				B2G.SetGame(game, Server.getBoard(), game.getGameMap());
-			
+
 				repaint();
 			}
 		});
@@ -251,13 +251,13 @@ public class MainWindow extends JFrame implements MouseListener
 		Server = new Play();
 		B2G = new Board2Game();
 		//Server.setInitLocation(32.1040,35.2061);
-		
+
 		try {
 			FruitImage = ImageIO.read(new File("Fruit.PNG"));
 			PackManImage = ImageIO.read(new File("PackMan.PNG"));
 			GhostImage = ImageIO.read(new File("Ghost.PNG"));
 			PlayerImage = ImageIO.read(new File("Player.PNG"));
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -276,7 +276,7 @@ public class MainWindow extends JFrame implements MouseListener
 		{
 			Pixel p = game.getGameMap().GPSPoint2Pixel(game.getPlayer().getGps());
 			g.drawImage(PlayerImage,(int)p.get_PixelX(),(int)p.get_PixelY(),this);
-			
+
 			for (int i = 0; i < game.getPackmans().size(); i++) {
 				p = game.getGameMap().GPSPoint2Pixel(game.getPackmans().get(i).getGps());
 				g.drawImage(PackManImage,(int)p.get_PixelX(),(int)p.get_PixelY(),this);
@@ -289,26 +289,26 @@ public class MainWindow extends JFrame implements MouseListener
 				p = game.getGameMap().GPSPoint2Pixel(game.getGhosts().get(i).getGps());
 				g.drawImage(GhostImage,(int)p.get_PixelX(),(int)p.get_PixelY(),this);
 			}
-			
+
 			for (int i = 0; i < game.getGeoBoxs().size(); i++) 
 			{
 				Pixel p1 = game.getGameMap().GPSPoint2Pixel(game.getGeoBoxs().get(i).getStartPoint());
 				Pixel p2 = game.getGameMap().GPSPoint2Pixel(game.getGeoBoxs().get(i).getEndPoint());
-				
-				g.fillRect((int)p1.get_PixelX(),(int)p2.get_PixelY(),(int)Math.abs(p1.get_PixelX()-p2.get_PixelX()),(int)Math.abs(p1.get_PixelY()-p2.get_PixelY()));
-						
-				
 
-				
+				g.fillRect((int)p1.get_PixelX(),(int)p2.get_PixelY(),(int)Math.abs(p1.get_PixelX()-p2.get_PixelX()),(int)Math.abs(p1.get_PixelY()-p2.get_PixelY()));
+
+
+
+
 			}
 			System.out.println(game.getGame().toString());
 		}
-		
+
 	}	
 
 
 
-	
+
 	@Override
 	public void mouseClicked(MouseEvent arg) {
 		if(ifThereRun)
@@ -337,7 +337,7 @@ public class MainWindow extends JFrame implements MouseListener
 				break;
 			case 'Q' :
 				Point3D resultQ=game.getGameMap().Pixel2GPSPoint(arg.getX(), arg.getY());
-			
+
 				game.addGeoBox(new GeoBox(Box, resultQ, game.getGameMap()));
 				WhoAmI = 'B';
 				break;
@@ -351,13 +351,14 @@ public class MainWindow extends JFrame implements MouseListener
 			System.out.println("mouse Clicked");
 			System.out.println("("+ arg.getX() + "," + arg.getY() +")");
 			Pixel player=game.getGameMap().GPSPoint2Pixel(new Point3D(game.getPlayer().getGps()));
-
+			Point3D  playerGPS = game.getGameMap().Pixel2GPSPoint(player.get_PixelX(), player.get_PixelY());
 			Pixel target=new Pixel(arg.getX(),arg.getY());
-			azimuth(player, target);
+			Point3D  targetGPS = game.getGameMap().Pixel2GPSPoint(target.get_PixelX(), target.get_PixelY());
+			azimuth(playerGPS.y(),playerGPS.x(), targetGPS.y(),targetGPS.x());
 		}
 		repaint();
 	}
-	
+
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 
@@ -382,23 +383,23 @@ public class MainWindow extends JFrame implements MouseListener
 		// TODO Auto-generated method stub
 
 	}
-	public void azimuth(Pixel player,Pixel target)
-	{
-		double dy=target.get_PixelX()-player.get_PixelX();
-		double dx=target.get_PixelY()-player.get_PixelY();
-		double alpha=Math.abs(Math.atan(dy/dx)*(180/Math.PI));
+	public void azimuth(double lat1, double lon1, double lat2, double lon2){
+		
 
-		double azimuth;
-		if(dx<0&&dy<0)
-			azimuth=180+alpha;
-		else if(dx<0&&dy>0)
-			azimuth=180-alpha;
-		else if(dx>0&&dy<0)
-			azimuth=360-alpha;
-		else
-			azimuth=alpha;
-		playerDirection=(int)(180- azimuth);
+	
+		
+			  double longitude1 = lon1;
+			  double longitude2 = lon2;
+			  double latitude1 = Math.toRadians(lat1);
+			  double latitude2 = Math.toRadians(lat2);
+			  double longDiff= Math.toRadians(longitude2-longitude1);
+			  double y= Math.sin(longDiff)*Math.cos(latitude2);
+			  double x=Math.cos(latitude1)*Math.sin(latitude2)-Math.sin(latitude1)*Math.cos(latitude2)*Math.cos(longDiff);
 
+			  playerDirection= (Math.toDegrees(Math.atan2(y, x))+360)%360;
+			
+		
+	
 	}
 
 
@@ -422,36 +423,67 @@ public class MainWindow extends JFrame implements MouseListener
 				repaint();
 			}
 			Server.stop();
-			
+
 
 		}
 
 	}
+	
+
 	public class GameAuto extends Thread
 	{
 		@Override
-		public void run() {
-			Pixel PlayerPix  = new Pixel(-1,-1); 
+		public void run()
+		{
+			int size = game.getFruits().size();
+			azimuth(game.getPlayer().getGps().y(), game.getPlayer().getGps().x(),game.getFruits().get(0).getGps().y(),game.getFruits().get(0).getGps().x());
+			
+			while(!game.getFruits().isEmpty())
+			{
+				System.out.println("size:"+size);
+				System.out.println("arr:"+game.getFruits().size());
+				try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(size != game.getFruits().size()) 
+				{
+					azimuth(game.getPlayer().getGps().y(), game.getPlayer().getGps().x(),game.getFruits().get(game.getFruits().size()-1).getGps().y(),game.getFruits().get(game.getFruits().size()-1).getGps().x());
+					size--;
+					System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
+				}
+					
+			}
+		}
+	}
+}
+
+/*
+ * 
+ * 
+ * 	Pixel PlayerPix  = new Pixel(-1,-1); 
 			int i = 1 ; 
-			azimuth(algo.PixelInclude.get(0),algo.PixelInclude.get(algo.PixelInclude.size()-1));
+			
 			ArrayList<String> dataP = new ArrayList<String>();
 			while(Server.isRuning())
 			{
 				dataP = Server.getBoard();
 				String[] Player = dataP.get(0).split(",");
 				PlayerPix = game.getGameMap().GPSPoint2Pixel(new Point3D(Double.parseDouble(Player[2]),Double.parseDouble(Player[3]),0));
-				//System.out.println(PlayerPix);
-				//System.out.println(algo.PixelInclude.get(Integer.parseInt(algo.shortestPath.get(i))));
+				
 				if(Math.abs(PlayerPix.get_PixelX()-algo.PixelInclude.get(i).get_PixelX()) < 5 && Math.abs(PlayerPix.get_PixelY()-algo.PixelInclude.get(i).get_PixelY() ) < 9 )
 				{
 					i++;
 					if(algo.shortestPath.size()-1 != i)
-						azimuth(PlayerPix, algo.PixelInclude.get(Integer.parseInt(algo.shortestPath.get(i))));
+						azimuth(game.getPlayer().getGps().y(),game.getPlayer().getGps().x() , algo.point3DInclude.get(i).y(),algo.point3DInclude.get(i).x());
 					else 
-						azimuth(PlayerPix,algo.PixelInclude.get(algo.PixelInclude.size()-1));
+						azimuth(game.getPlayer().getGps().y(),game.getPlayer().getGps().x() , algo.point3DInclude.get(algo.point3DInclude.size()-1).y(),algo.point3DInclude.get(algo.point3DInclude.size()-1).x());
 				}
 			}
-		}
-	}
+		
+	
+	
+ */
 
-}
