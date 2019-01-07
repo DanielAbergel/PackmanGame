@@ -432,27 +432,27 @@ public class MainWindow extends JFrame implements MouseListener
 		@Override
 		public void run()
 		{
-			
-			algo.StartAlgo(game.getGameMap().GPSPoint2Pixel(game.getPlayer().getGps()), game.getGameMap().GPSPoint2Pixel(game.getFruits().get(0).getGps()));
-			algo.shortestPath.remove(0);
-			azimuth(game.getPlayer().getGps().y(), game.getPlayer().getGps().x(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).y(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).x());
+//			
+//			algo.StartAlgo(game.getGameMap().GPSPoint2Pixel(game.getPlayer().getGps()), game.getGameMap().GPSPoint2Pixel(game.getFruits().get(0).getGps()));
+//			algo.shortestPath.remove(0);
+//			azimuth(game.getPlayer().getGps().y(), game.getPlayer().getGps().x(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).y(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).x());
 			
 			while(Server.isRuning())
 			{
 				
-				if(algo.shortestPath.isEmpty()); // > update algo ;
-				else 
-				{
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if(check(algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0)))))
+				
+					while(!game.getFruits().isEmpty())
 					{
-						algo.shortestPath.remove(0);
-						azimuth(game.getPlayer().getGps().y(), game.getPlayer().getGps().x(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).y(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).x());
+						try {
+							Thread.sleep(20);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						azimuth(game.getPlayer().getGps().y(), game.getPlayer().getGps().x(), game.getPackmans().get(0).getGps().y(), game.getPackmans().get(0).getGps().x());
+						
+//						algo.shortestPath.remove(0);
+//						azimuth(game.getPlayer().getGps().y(), game.getPlayer().getGps().x(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).y(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).x());
 					}
 				}
 				
@@ -468,21 +468,20 @@ public class MainWindow extends JFrame implements MouseListener
 		
 		
 	}
-}
+
+
 
 /*
  * 
  * 
  * 	Pixel PlayerPix  = new Pixel(-1,-1); 
 			int i = 1 ; 
-
 			ArrayList<String> dataP = new ArrayList<String>();
 			while(Server.isRuning())
 			{
 				dataP = Server.getBoard();
 				String[] Player = dataP.get(0).split(",");
 				PlayerPix = game.getGameMap().GPSPoint2Pixel(new Point3D(Double.parseDouble(Player[2]),Double.parseDouble(Player[3]),0));
-
 				if(Math.abs(PlayerPix.get_PixelX()-algo.PixelInclude.get(i).get_PixelX()) < 5 && Math.abs(PlayerPix.get_PixelY()-algo.PixelInclude.get(i).get_PixelY() ) < 9 )
 				{
 					i++;
@@ -492,9 +491,7 @@ public class MainWindow extends JFrame implements MouseListener
 						azimuth(game.getPlayer().getGps().y(),game.getPlayer().getGps().x() , algo.point3DInclude.get(algo.point3DInclude.size()-1).y(),algo.point3DInclude.get(algo.point3DInclude.size()-1).x());
 				}
 			}
-
 int size = game.getFruits().size();
-
 			boolean ans = true ; 
 			while(!game.getFruits().isEmpty())
 			{
@@ -506,17 +503,12 @@ int size = game.getFruits().size();
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-
-
-
 				if(size != game.getFruits().size()  || ans) 
 				{
 					algo.StartAlgo(game.getGameMap().GPSPoint2Pixel(game.getPlayer().getGps()),game.getGameMap().GPSPoint2Pixel(game.getFruits().get(0).getGps()) );
 					algo.shortestPath.remove(0);
 					while(!algo.shortestPath.isEmpty())
 					{
-
 						azimuth(game.getPlayer().getGps().y(), game.getPlayer().getGps().x(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).y(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).x());
 						ans = false ; 
 						try {
@@ -530,14 +522,10 @@ int size = game.getFruits().size();
 							algo.shortestPath.remove(0);
 						}
 					}
-
 					size--;
 					System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
 				}
-
 			}
 		}
 	}
-
  */
-
