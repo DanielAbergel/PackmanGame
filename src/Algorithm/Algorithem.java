@@ -52,10 +52,7 @@ public class Algorithem
 		PixelInclude.addAll(PixelList);
 		PixelInclude.add(destLocation);
 		int size = PixelInclude.size() ;
-		for (int i = 0; i < PixelInclude.size(); i++) {
-			point3DInclude.add(new Point3D(map.Pixel2GPSPoint(PixelInclude.get(i).get_PixelX(), PixelInclude.get(i).get_PixelY())));
-			
-		}
+	
 
 		Graph G = new Graph();
 		String Source = "0";
@@ -85,15 +82,45 @@ public class Algorithem
 		}
 
 		Graph_Algo.dijkstra(G, Source);
-
+	
+		for (int i = 1; i < PixelInclude.size()-1; i++) 
+		{
+			
+			switch (PixelInclude.get(i).v()) {
+			case 1:
+				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()-9);
+				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()+9);
+				break;
+			case 2:
+				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()+9);
+				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()-9);
+				break;
+			case 3:
+				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()+9);
+				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()+9);
+				break;
+			case 4:
+				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()-9);
+				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()-9);
+				break;
+			}
+			
+		}
+		
+		for (int i = 0; i < PixelInclude.size(); i++) {
+			point3DInclude.add(new Point3D(map.Pixel2GPSPoint(PixelInclude.get(i).get_PixelX(), PixelInclude.get(i).get_PixelY())));
+			
+		}
 		Node b = G.getNodeByName(Target);
 		System.out.println("***** Graph Demo for OOP_Ex4 *****");
 		System.out.println(b);
 		System.out.println("Dist: "+b.getDist());
 		 shortestPath = b.getPath();
+		 shortestPath.add("" + (point3DInclude.size()-1));
 		for(int i=0;i<shortestPath.size();i++) {
 			System.out.print(","+shortestPath.get(i));
 		}
+		
 		
 	}
 

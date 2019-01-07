@@ -13,6 +13,7 @@ public class Pixel {
 	
 	private double _PixelX;
 	private double _PixelY;
+	private int _v ; 
 	
 	/**
 	 * this constructor build the x&y pixels values of the point.
@@ -22,6 +23,7 @@ public class Pixel {
 	public  Pixel(double PixelX , double PixelY){
 		set_PixelX(PixelX);
 		set_PixelY(PixelY);
+		_v = 0 ;
 	}
 
 	/**
@@ -34,6 +36,7 @@ public class Pixel {
 		Pixel temp = map.GPSPoint2Pixel(GPS);
 		set_PixelX(temp._PixelX);
 		set_PixelY(temp._PixelY);
+		_v = 0 ;
 		
 	}
 	/**
@@ -44,6 +47,7 @@ public class Pixel {
 	{
 		set_PixelX(other.get_PixelX());
 		set_PixelY(other.get_PixelY());
+		_v = 0 ;
 	}
 	public double get_PixelX() {
 		return _PixelX;
@@ -88,4 +92,6 @@ public class Pixel {
 		return this._PixelX  + " , " + this._PixelY;
 	}
 	
+	public void set(int val) { _v = val ;} 
+	public int v() { return _v;} 
 }

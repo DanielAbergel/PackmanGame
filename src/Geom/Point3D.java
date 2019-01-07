@@ -10,18 +10,20 @@ public class Point3D implements Geom_element, Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	private double _x,_y,_z;
-
+	private int _v ;
 	public Point3D(double x,double y,double z) 
 	{
 		_x=x; //lon
 		_y=y; //alt
 		_z=z;
+		_v = 0;
 	}
 	public Point3D(GpsPoint p)
 	{
 		_x = p.getLon();
 		_y = p.getLat();
 		_z = p.getAlt();
+		_v = 0 ; 
 	}
 
 	public Point3D(Point3D p) 
@@ -29,6 +31,7 @@ public class Point3D implements Geom_element, Serializable
 		_x=p.x();
 		_y=p.y();
 		_z=p.z();
+		_v = 0 ; 
 	}
 	public Point3D(double x,double y) 
 	{this(x,y,0);}
@@ -49,7 +52,7 @@ public class Point3D implements Geom_element, Serializable
 	public int ix() {return (int)_x;}
 	public int iy() {return (int)_y;}
 	public int iz() {return (int)_z;}
-
+	
 	public void add(Point3D p) {
 		add(p._x,p._y,p._z);
 	}
@@ -88,7 +91,7 @@ public class Point3D implements Geom_element, Serializable
 
 	public boolean equals(Point3D p2)
 	{
-		return ( (_x==p2._x) && (_y==p2._y) && (_z==p2._z) );
+		return ( (_x==p2._x) && (_y==p2._y)  );
 	}
 
 	public boolean close2equals(Point3D p2, double dist)
