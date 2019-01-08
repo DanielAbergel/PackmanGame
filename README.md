@@ -47,14 +47,23 @@ Geom package represents shapes in space:
  
  
 ### ExampleGameMap
-### ExampleBeforeRun / ExampleAfterRun
+
 ![ariel1](https://user-images.githubusercontent.com/44754325/49361557-0b294d80-f6e5-11e8-90f0-a871b2571359.png)
+
+### ExampleBeforeRun 
+![26](https://user-images.githubusercontent.com/44754325/50837946-8e356780-1365-11e9-8f3b-90e6a6febe38.png)
+
+### ExampleAfterRun
+![25](https://user-images.githubusercontent.com/44754325/50837951-92618500-1365-11e9-8c44-be400a965112.png)
+
+
 <img width="1924" alt="default" src="https://user-images.githubusercontent.com/44754325/50835120-87572680-135e-11e9-891d-555131187996.png">
 ### Run ans Start Playing .
 #### There are two options to start:
 - The goal of the game: Eat all the fruits on the board.
 - Independent game with the mouse: The game move is that every click of the user moves the player to the location of the mouse, the user has to dodge the winds, and eat as many fruits or pakmans every penny will win it at one point.
 - Automatic game: happens alone, the player will eat the fruits in the shortest way. (Just click the AutoGame tab)
+
 have fun !
 
 ### Sorces
