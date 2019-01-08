@@ -56,9 +56,6 @@ Geom package represents shapes in space:
 ### ExampleAfterRun
 ![25](https://user-images.githubusercontent.com/44754325/50837951-92618500-1365-11e9-8c44-be400a965112.png)
 
-
-<img width="1924" alt="default" src="https://user-images.githubusercontent.com/44754325/50835120-87572680-135e-11e9-891d-555131187996.png">
-
 ### Run ans Start Playing .
 
 #### There are two options to start:
