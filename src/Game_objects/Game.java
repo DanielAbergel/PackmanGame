@@ -6,6 +6,11 @@ import File_format.Board2Game;
 import Maps.Map;
 import Maps.Pixel;
 
+/**
+ * 
+ * @author Netanel Ben-Isahar
+ * this class represent a game and hold all of the relevant objects for it.
+ */
 public  class Game 
 {
 	ArrayList<Ghost> Ghosts ; 
@@ -16,6 +21,9 @@ public  class Game
 	Map GameMap  ; 
 	Board2Game B2G ;
 
+	/**
+	 * this constructor build the game and initializing the relevnt objects.
+	 */
 	public Game() 
 	{
 		GameMap = new Map();
@@ -49,6 +57,9 @@ public  class Game
 	{
 		B2G.SetGame(this, Data,getGameMap());
 	}
+	 /**
+	  * this function clear all of the data from the game objects.
+	  */
 	public  synchronized void clear()
 	{
 		GeoBoxs.clear();
@@ -75,7 +86,10 @@ public  class Game
 		// TODO Auto-generated method stub
 		this.GeoBoxs.add(B);
 	}
-	
+	/**
+	 * this function build all of the game data into a string.
+	 * @return the data on a StringBuilder.
+	 */
 	public synchronized StringBuilder getGame(){
 		StringBuilder SB = new StringBuilder();
 //		SB.append(getPlayer().toString() + "\n");
@@ -98,6 +112,7 @@ public  class Game
 		}
 		return SB ; 
 	}
+	
 	public String toString() {
 		StringBuilder SB = new StringBuilder();
 		SB.append(getPlayer().toString() + "\n");

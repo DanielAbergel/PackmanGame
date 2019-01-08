@@ -82,14 +82,18 @@ public class MainWindow extends JFrame implements MouseListener
 	Point3D Box ; 
 
 
-
+/**
+ * this constructor initializing the gui.
+ */
 	public MainWindow() 
 	{
 		initGUI();		
 		this.addMouseListener(this); 
 	}
 
-
+/**
+ * this function is define the menu.
+ */
 	private void InitMenu() {
 
 		MenuBar  menubar = new MenuBar ();
@@ -120,7 +124,6 @@ public class MainWindow extends JFrame implements MouseListener
 		gameM.add(Ghost);
 		gameM.add(run);
 		this.setMenuBar(menubar);
-
 
 
 		autoGame.addActionListener(new ActionListener() {

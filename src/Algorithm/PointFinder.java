@@ -10,16 +10,30 @@ import Geom.Point3D;
 import Maps.Map;
 import Maps.Pixel;
 
-
+/**
+ * 
+ * @author Netanel Ben-Isahar
+ *
+ * this class is responsible of collecting the boxes corners.
+ */
 public class PointFinder {
 
 	ArrayList<Point3D> Points ; 
 	MyCoords Convert ; 
 
+	/**
+	 * this constructor is define points and convert.
+	 */
 	public PointFinder() {
 		Points = new ArrayList<Point3D>();
 		Convert = new MyCoords() ; 
 	}
+	/**
+	 * this function collect the 2 first points of the box use another function to collect the two others.
+	 * @param game represents a game.
+	 * @param map represents a map.
+	 * @return a pixel arraylist of points.
+	 */
 	public ArrayList<Pixel> getPixels (Game game, Map map){
 		for (int i = 0; i < game.getGeoBoxs().size(); i++)
 		{
@@ -40,6 +54,11 @@ public class PointFinder {
 		
 		return PointPix ;
 	}
+	/**
+	 * this function collect the 2 other points.
+	 * @param Min represents a min point.
+	 * @param Max represents a max point.
+	 */
 	private void addNearPoints(Point3D Min , Point3D Max)
 	{
 		Point3D Vec = Convert.vector3D(Min, Max) ; 
