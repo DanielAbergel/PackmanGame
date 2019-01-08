@@ -14,7 +14,13 @@ import Maps.Pixel;
 import graph.Graph;
 import graph.Graph_Algo;
 import graph.Node;
-
+/**
+ * 
+ * @author Netanel Ben-Isahar
+ *
+ *this class is responsible of creating the path that avoid gettiing into the boxes from the player location
+ * to a fruit 
+ */
 public class Algorithem 
 {
 	ArrayList<Pixel> PixelList ;
@@ -24,6 +30,12 @@ public class Algorithem
 
 	public ArrayList<Point3D> point3DInclude;
 	Map map ; 
+
+	/**
+	 * this constructor is responsible of creating an algorithm object
+	 * @param game represents our game
+	 * @param map represents our map
+	 */
 	public Algorithem(Game game , Map map)
 	{
 		PointFinder  PF = new PointFinder() ; 
@@ -38,13 +50,17 @@ public class Algorithem
 	}
 
 
-
+	/**
+	 * this function responsible of update the PixelInclude&shortestPath arraysõ 
+	 * @param myLocation represents the player location.
+	 * @param destLocation represents a fruit location.
+	 */
 	public void StartAlgo(Pixel myLocation,Pixel destLocation)
 	{
 
 		System.out.println(myLocation);
 		System.out.println(destLocation);
-	
+
 		for (int i = 0; i < PixelList.size(); i++) {
 			System.out.println(PixelList.get(i));
 		}
@@ -52,7 +68,7 @@ public class Algorithem
 		PixelInclude.addAll(PixelList);
 		PixelInclude.add(destLocation);
 		int size = PixelInclude.size() ;
-	
+
 
 		Graph G = new Graph();
 		String Source = "0";
@@ -82,10 +98,10 @@ public class Algorithem
 		}
 
 		Graph_Algo.dijkstra(G, Source);
-	
+
 		for (int i = 1; i < PixelInclude.size()-1; i++) 
 		{
-			
+
 			switch (PixelInclude.get(i).v()) {
 			case 1:
 				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()-10);
@@ -104,32 +120,38 @@ public class Algorithem
 				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()-10);
 				break;
 			}
-			
+
 		}
-		
+
 		for (int i = 0; i < PixelInclude.size(); i++) {
 			point3DInclude.add(new Point3D(map.Pixel2GPSPoint(PixelInclude.get(i).get_PixelX(), PixelInclude.get(i).get_PixelY())));
-			
+
 		}
 		Node b = G.getNodeByName(Target);
 		System.out.println("***** Graph Demo for OOP_Ex4 *****");
 		System.out.println(b);
 		System.out.println("Dist: "+b.getDist());
-		 shortestPath = b.getPath();
-		 shortestPath.add("" + (point3DInclude.size()-1));
+		shortestPath = b.getPath();
+		shortestPath.add("" + (point3DInclude.size()-1));
 		for(int i=0;i<shortestPath.size();i++) {
 			System.out.print(","+shortestPath.get(i));
 		}
-		
-		
+
+
 	}
 
-	
-	
 
 
 
-	/********************Private functions*********************/
+
+
+	/**
+	 * 	this is a boolean function that decide if a point "can see" another point.
+	 * @param p1 represents the first point.
+	 * @param p2 represents the second point.
+	 * @return true if a point can see another point.
+	 */
+
 	private boolean DidISeehim(Pixel p1 , Pixel p2) 
 	{
 		Line2D Line = new Line2D.Double(p1.get_PixelX(),p1.get_PixelY(),p2.get_PixelX(),p2.get_PixelY());
@@ -145,10 +167,22 @@ public class Algorithem
 		}
 		return ans;
 	}
+	
+	/**
+	 * this function check if two segments intersects.
+	 * @param line1 represents the first segment.
+	 * @param line2 represents the second segment.
+	 * @return true if wo segments intersects.
+	 */
 	private boolean IFintersects(Line2D line1 , Line2D line2 )
 	{
 		return line1.intersectsLine(line2);
 	}
+	
+	/**
+	 * this function responsible of changing the points of the corner of the box to a meter away.
+	 * @param Pixels represents the pixels array.
+	 */
 	private void UpdateLines(ArrayList<Pixel> Pixels) {
 
 		for (int i = 0; i < Pixels.size(); i = i + 4) 
@@ -163,6 +197,9 @@ public class Algorithem
 		}
 
 	}
+	/**
+	 *  this function responsible of removing the points that we don't need anymore.
+	 */
 	private void RemovePoints() {
 		ArrayList<Pixel> RemoveList = new ArrayList<Pixel>(PixelList);
 		for (int i = RemoveList.size()-1; 0 < i; i--) {
@@ -182,32 +219,32 @@ public class Algorithem
 		PixelList = RemoveList ;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public static void main(String[] args) {
-		
+
 		Game game = new Game();
 		Map map = new Map();
-	
+
 		game.getGeoBoxs().add(new GeoBox(new Point3D(35.20552370064878,32.10346280397053,0),new Point3D(35.20727202866246,32.10393044420183,0),map));
 		game.getGeoBoxs().add(new GeoBox(new Point3D(35.206075800165465,32.102943206521985,0),new Point3D(35.20659109643439,32.10354074384279,0),map));
-	
-		
+
+
 
 		Algorithem A = new Algorithem(game,map);
 		A.StartAlgo(map.GPSPoint2Pixel(new Point3D(35.20519244274052,32.10376157384208,0)), map.GPSPoint2Pixel(new Point3D(35.207437661689454,32.10351476387798,0)));

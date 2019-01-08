@@ -8,11 +8,23 @@ import java.util.ArrayList;
 import Game_objects.Game;
 
 
+/**
+ * 
+ *@author Netanel Ben-Isahar
+ *@author daniel abargel
+ *
+ *this class suppose to convert a game to csv file.
+ */
 
 public class Game2CSV {
 
 	Game game ; 
 
+	
+	/**
+	 * this constructor collect every object and store their data.
+	 * @param game represent a game.
+	 */
 	public void CreateCSV(Game game ){
 		PrintWriter pw;
 		try {

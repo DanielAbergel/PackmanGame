@@ -11,7 +11,13 @@ import Geom.Point3D;
 import Maps.Map;
 import Robot.Play;
 
-
+/**
+ * 
+ *@author Netanel Ben-Isahar
+ *@author daniel abargel
+ *
+ *this class suppose to convert board to game.
+ */
 
 
 
@@ -20,13 +26,20 @@ public class Board2Game {
 	Game _game ; 
 	ArrayList<String> _data ; 
 	StringBuilder SB ; 
-
+/**
+ * this constructor is initializing the data arraylist.
+ */
 	public Board2Game()
 	{
 		_data = new ArrayList<String>();
 	
 
 	}
+	/**
+	 * this function take the data from board and store it in game objects.
+	 * @param data represents a data string arraylist.
+	 * @param map represents a map.
+	 */
 
 	private void Create(ArrayList<String> data ,  Map map)
 	{
@@ -57,35 +70,65 @@ public class Board2Game {
 		}
 
 	}
-
+	/**
+	 * this function collect the data of the player.
+	 * @param Player represents the player.
+	 * @param map represents the map.
+	 */
 	private void SetPlayer(String Player,Map map) {
 		// TODO Auto-generated method stub
 		String[] data = Player.split(",");
 		_game.setPlayer(new Player(new Point3D(Double.parseDouble(data[2]),Double.parseDouble(data[3])), map));
 	}
+	/**
+	 * this function collect the data of the fruits.
+	 * @param Target represents the Target.
+	 * @param map represents the map.
+	 */
 	private void addTarget(String Target,Map map) {
 		// TODO Auto-generated method stub
 		String[] data = Target.split(",");
 		_game.getFruits().add(new Fruit(new Point3D(Double.parseDouble(data[2]),Double.parseDouble(data[3]),0), map));
 
 	}
+	/**
+	 * this function collect the data of the ghosts.
+	 * @param Ghost represents the Ghost.
+	 * @param map represents the map.
+	 */
 	private void addGhost(String Ghost,Map map) {
 		// TODO Auto-generated method stub
 		String[] data = Ghost.split(",");
 		_game.getGhosts().add(new Ghost(new Point3D(Double.parseDouble(data[2]),Double.parseDouble(data[3]),0), map));
 
 	}
+	/**
+	 * this function collect the data of the boxes.
+	 * @param Box represents the Box.
+	 * @param map represents the map.
+	 */
 	private void addBox(String Box,Map map) {
 		String[] data = Box.split(",");
 		_game.getGeoBoxs().add(new GeoBox(new Point3D(Double.parseDouble(data[2]),Double.parseDouble(data[3]),0),new Point3D(Double.parseDouble(data[5]),Double.parseDouble(data[6]),0),map));
 
 	}
+	/**
+	 * this function collect the data of the player.
+	 * @param Packman represents the Packman.
+	 * @param map represents the map.
+	 */
 	private void addPackman(String Packman ,Map map) {
 		String[] data = Packman.split(",");
 		_game.getPackmans().add(new Packman(new Point3D(Double.parseDouble(data[2]),Double.parseDouble(data[3]),0), map));
 
 	}
-
+	
+	/**
+	 * this function is responsible of creating a game.
+	 * @param game represents the game.
+	 * @param Data represents the data string arraylist.
+	 * @param map represents the map.
+	 */
 	public  void SetGame(Game game , ArrayList<String> Data,Map map) 
 	{
 		_game = game ; 

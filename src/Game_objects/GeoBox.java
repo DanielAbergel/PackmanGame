@@ -3,14 +3,24 @@ package Game_objects;
 import Geom.Point3D;
 import Maps.Map;
 import Maps.Pixel;
-
+/**
+ * 
+ * @author Netanel Ben-Isahar
+ *
+ * this class represents a box.
+ */
 public class GeoBox {
 
 	Point3D StartPoint ; 
 	Point3D EndPoint ; 
 	Pixel StartPix;
 	Pixel EndPix;
-
+	/**
+	 * this constructor build the box by gps points.
+	 * @param Start represents the starting point.
+	 * @param End represents the ending point.
+	 * @param map represents the map.
+	 */
 	public GeoBox(Point3D Start , Point3D End , Map map) 
 	{
 		StartPoint = Start ; 
@@ -18,6 +28,12 @@ public class GeoBox {
 		EndPoint = End ; 
 		EndPix = map.GPSPoint2Pixel(End);
 	}
+	/**
+	* this constructor build the box by pixel points.
+	 * @param Start represents the starting point.
+	 * @param End represents the ending point.
+	 * @param map represents the map.
+	 */
 	public GeoBox(Pixel Start , Pixel End , Map map)
 	{
 		StartPix = Start ; 
