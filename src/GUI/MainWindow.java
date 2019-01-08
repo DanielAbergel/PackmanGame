@@ -266,25 +266,26 @@ public class MainWindow extends JFrame implements MouseListener
 	public void paint(Graphics g)
 	{
 
-
-		g.drawImage(game.getGameMap().myImage, 0, 0,this.getWidth(),this.getHeight(), this);
+		Image img = createImage(5000,5000);
+		Graphics g1 = img.getGraphics();
+		g1.drawImage(game.getGameMap().myImage, 0, 0,this.getWidth(),this.getHeight(), this);
 		game.getGameMap().ChangeFrameSize(new Pixel(this.getWidth(), this.getHeight()));
 		if(true)
 		{
 			Pixel p = game.getGameMap().GPSPoint2Pixel(game.getPlayer().getGps());
-			g.drawImage(PlayerImage,(int)p.get_PixelX()-15,(int)p.get_PixelY()-15,this);
+			g1.drawImage(PlayerImage,(int)p.get_PixelX()-15,(int)p.get_PixelY()-15,this);
 
 			for (int i = 0; i < game.getPackmans().size(); i++) {
 				p = game.getGameMap().GPSPoint2Pixel(game.getPackmans().get(i).getGps());
-				g.drawImage(PackManImage,(int)p.get_PixelX()-20,(int)p.get_PixelY()-10,this);
+				g1.drawImage(PackManImage,(int)p.get_PixelX()-20,(int)p.get_PixelY()-10,this);
 			}
 			for (int i = 0; i < game.getFruits().size(); i++) {
 				p = game.getGameMap().GPSPoint2Pixel(game.getFruits().get(i).getGps());
-				g.drawImage(FruitImage,(int)p.get_PixelX()-12,(int)p.get_PixelY()-12,this);
+				g1.drawImage(FruitImage,(int)p.get_PixelX()-12,(int)p.get_PixelY()-12,this);
 			}
 			for (int i = 0; i < game.getGhosts().size(); i++) {
 				p = game.getGameMap().GPSPoint2Pixel(game.getGhosts().get(i).getGps());
-				g.drawImage(GhostImage,(int)p.get_PixelX()-15,(int)p.get_PixelY()-15,this);
+				g1.drawImage(GhostImage,(int)p.get_PixelX()-15,(int)p.get_PixelY()-15,this);
 			}
 
 			for (int i = 0; i < game.getGeoBoxs().size(); i++) 
@@ -292,7 +293,7 @@ public class MainWindow extends JFrame implements MouseListener
 				Pixel p1 = game.getGameMap().GPSPoint2Pixel(game.getGeoBoxs().get(i).getStartPoint());
 				Pixel p2 = game.getGameMap().GPSPoint2Pixel(game.getGeoBoxs().get(i).getEndPoint());
 
-				g.fillRect((int)p1.get_PixelX(),(int)p2.get_PixelY(),(int)Math.abs(p1.get_PixelX()-p2.get_PixelX()),(int)Math.abs(p1.get_PixelY()-p2.get_PixelY()));
+				g1.fillRect((int)p1.get_PixelX(),(int)p2.get_PixelY(),(int)Math.abs(p1.get_PixelX()-p2.get_PixelX()),(int)Math.abs(p1.get_PixelY()-p2.get_PixelY()));
 
 
 
@@ -300,7 +301,7 @@ public class MainWindow extends JFrame implements MouseListener
 			}
 
 		}
-
+		g.drawImage(img,0,0,this);
 	}	
 
 
