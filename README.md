@@ -29,7 +29,6 @@ The Coords package has the:
 The File format package has:
 #### Board2Game
 The class Convert a ArrayList<String> which represent data of the game at a given moment, and creates a new game from the same data.
- 
 #### Game2CSV
 The class convert a CSV file to Game (Object in java) . 
 And displays it on the screen
@@ -43,17 +42,21 @@ Geom package represents shapes in space:
 
 
  #### ClassDiagram
-![classd](https://user-images.githubusercontent.com/44754325/50738259-8d23ff00-11da-11e9-9f86-abfeec50958b.png)
+![software component diagram](https://user-images.githubusercontent.com/44754325/50836257-71973080-1361-11e9-843d-9ed415a7d98b.png)
+
  
  
 ### ExampleGameMap
+### ExampleBeforeRun / ExampleAfterRun
 ![ariel1](https://user-images.githubusercontent.com/44754325/49361557-0b294d80-f6e5-11e8-90f0-a871b2571359.png)
-### ExampleBeforeRun
-![16](https://user-images.githubusercontent.com/44754325/50387581-72488980-0708-11e9-914f-c0835c6df1be.png)
-### ExampleAfterRun
-![17](https://user-images.githubusercontent.com/44754325/50387584-842a2c80-0708-11e9-95c0-a5d6c0b590b1.png)
-### ExampleKmlRun
-![18](https://user-images.githubusercontent.com/44754325/50387587-9ad08380-0708-11e9-8cb0-2c1ea3cc6bb4.png)
+<img width="1924" alt="default" src="https://user-images.githubusercontent.com/44754325/50835120-87572680-135e-11e9-891d-555131187996.png">
+### Run ans Start Playing .
+#### There are two options to start:
+- The goal of the game: Eat all the fruits on the board.
+- Independent game with the mouse: The game move is that every click of the user moves the player to the location of the mouse, the user has to dodge the winds, and eat as many fruits or pakmans every penny will win it at one point.
+- Automatic game: happens alone, the player will eat the fruits in the shortest way. (Just click the AutoGame tab)
+have fun !
+
 ### Sorces
 
  - converting coordinates : https://stackoverflow.com/questions/1185408/converting-from-longitude-latitude-to-cartesian-coordinates  
