@@ -58,13 +58,15 @@ Geom package represents shapes in space:
 
 
 <img width="1924" alt="default" src="https://user-images.githubusercontent.com/44754325/50835120-87572680-135e-11e9-891d-555131187996.png">
+
 ### Run ans Start Playing .
+
 #### There are two options to start:
 - The goal of the game: Eat all the fruits on the board.
 - Independent game with the mouse: The game move is that every click of the user moves the player to the location of the mouse, the user has to dodge the winds, and eat as many fruits or pakmans every penny will win it at one point.
 - Automatic game: happens alone, the player will eat the fruits in the shortest way. (Just click the AutoGame tab)
 
-have fun !
+## have fun !
 
 ### Sorces
 
