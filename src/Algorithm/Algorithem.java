@@ -27,7 +27,6 @@ public class Algorithem
 	ArrayList<Line2D> Lines ; 
 	public ArrayList<Pixel> PixelInclude ;
 	public ArrayList<String> shortestPath;
-
 	public ArrayList<Point3D> point3DInclude;
 	Map map ; 
 
@@ -43,6 +42,23 @@ public class Algorithem
 		PixelList = PF.getPixels(game, map) ;
 		PixelInclude = new ArrayList<Pixel>();
 		Lines = new ArrayList<Line2D>();
+		UpdateLines(PixelList);
+		shortestPath = new ArrayList<String>();
+		this.map = map;
+		RemovePoints();
+	}
+	/**
+	 * init all parameters 
+	 * @param game represents our game
+	 * @param map represents our map
+	 */
+	void init(Game game , Map map)
+	{
+		PointFinder  PF = new PointFinder() ; 
+		point3DInclude.clear();
+		PixelList = PF.getPixels(game, map) ;
+		PixelInclude.clear();
+		Lines.clear();
 		UpdateLines(PixelList);
 		shortestPath = new ArrayList<String>();
 		this.map = map;

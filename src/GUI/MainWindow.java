@@ -444,7 +444,12 @@ public class MainWindow extends JFrame implements MouseListener
 			while(Server.isRuning())
 			{
 				
-				if(algo.shortestPath.isEmpty()); // > update algo ;
+				if(algo.shortestPath.isEmpty() ) {
+					
+					
+					
+					// > update algo ; || !thereISFruit(algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(algo.shortestPath.size()-1))))
+				}
 				else 
 				{
 					try {
@@ -469,6 +474,14 @@ public class MainWindow extends JFrame implements MouseListener
 			Pixel p1 = game.getGameMap().GPSPoint2Pixel(P);
 			System.out.println(P);
 			return (Math.abs(p.get_PixelX()-p1.get_PixelX()) < 5) && (Math.abs(p1.get_PixelY()-p.get_PixelY()) < 5) ;
+		}
+		public boolean thereISFruit(Point3D P)
+		{
+			for (int i = 0; i < game.getFruits().size(); i++) 
+			{
+				if(P.close2equals(game.getFruits().get(i).getGps(),0.005)) return true; 
+			}
+			return false;
 		}
 		
 		
