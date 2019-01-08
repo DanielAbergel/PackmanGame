@@ -1,4 +1,4 @@
-# PacmanNavigation![200px-pac_man svg](https://user-images.githubusercontent.com/44754325/49365224-e9cd5f00-f6ee-11e8-8a7b-4521bce0280f.png)
+# PacmanGame ![200px-pac_man svg](https://user-images.githubusercontent.com/44754325/49365224-e9cd5f00-f6ee-11e8-8a7b-4521bce0280f.png)
 
 ## Descreption
 
