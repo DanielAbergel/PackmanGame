@@ -88,20 +88,20 @@ public class Algorithem
 			
 			switch (PixelInclude.get(i).v()) {
 			case 1:
-				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()-9);
-				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()+9);
+				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()-10);
+				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()+10);
 				break;
 			case 2:
-				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()+9);
-				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()-9);
+				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()+10);
+				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()-10);
 				break;
 			case 3:
-				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()+9);
-				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()+9);
+				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()+10);
+				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()+10);
 				break;
-			case 4:
-				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()-9);
-				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()-9);
+			case 0:
+				PixelInclude.get(i).set_PixelX(PixelInclude.get(i).get_PixelX()-10);
+				PixelInclude.get(i).set_PixelY(PixelInclude.get(i).get_PixelY()-10);
 				break;
 			}
 			

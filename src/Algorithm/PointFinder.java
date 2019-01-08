@@ -31,7 +31,8 @@ public class PointFinder {
 		ArrayList<Pixel>  PointPix = new ArrayList<Pixel>();
 		for (int i = 0; i < Points.size(); i++) {
 			PointPix.add(map.GPSPoint2Pixel(Points.get(i)));
-			PointPix.get(PointPix.size()-1).set((i+1) % 4);
+			System.out.println((i+1) % 4);
+			PointPix.get(i).set((i+1) % 4);
 		}
 		
 		

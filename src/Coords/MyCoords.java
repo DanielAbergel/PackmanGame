@@ -3,7 +3,7 @@ import Geom.GpsPoint;
 import Geom.Point3D;
 
 public class MyCoords implements coords_converter  {
-	
+
 	final int earth_r=6371000;
 	/**
 	 * This function convert the GPS point to meter and add a vector to the point.
@@ -67,12 +67,13 @@ public class MyCoords implements coords_converter  {
 		MyCoords m = new MyCoords(); 
 		Point3D StartPoint =  new Point3D(35.202384,32.105687,0); 
 		Point3D EndPoint = new Point3D(35.21237,32.10193,0);
+		System.out.println(EndPoint.GPS2Meter());
 //		Point3D T = m.vector3D(StartPoint, EndPoint);
 //		Point3D R = m.add(StartPoint, new Point3D(T.x()*(1.0/8),T.y()*(1.0/8),T.z()*(1.0/8)));
 //		System.out.println(T.x()*(1.0/8) +" " +T.y()*(1.0/8) +" " +T.z()*(1.0/8));
 //		System.out.println(1/8);
 //		System.out.println(R);
-		System.out.println(m.vector3D(StartPoint, EndPoint));
+		//System.out.println(m.vector3D(StartPoint, EndPoint));
 		
 	
 	}
