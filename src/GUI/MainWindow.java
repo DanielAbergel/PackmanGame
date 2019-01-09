@@ -437,23 +437,32 @@ public class MainWindow extends JFrame implements MouseListener
 		public void run()
 		{
 			
-			algo.StartAlgo(game.getGameMap().GPSPoint2Pixel(game.getPlayer().getGps()), game.getGameMap().GPSPoint2Pixel(game.getFruits().get(0).getGps()));
-			algo.shortestPath.remove(0);
-			azimuth(game.getPlayer().getGps().y(), game.getPlayer().getGps().x(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).y(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).x());
+//			algo.StartAlgo(game.getGameMap().GPSPoint2Pixel(game.getPlayer().getGps()), game.getGameMap().GPSPoint2Pixel(game.getFruits().get(0).getGps()));
+//			algo.shortestPath.remove(0);
+//			azimuth(game.getPlayer().getGps().y(), game.getPlayer().getGps().x(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).y(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).x());
 			
 			while(Server.isRuning())
 			{
-				
-				if(algo.shortestPath.isEmpty() ) {
+//				Thread.sleep(millis);
+				if(algo.shortestPath.isEmpty() || !thereISFruit(algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(algo.shortestPath.size()-1))))) {
+					try {
+						Thread.sleep(20);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					int index = algo.findShortest(game);
+					System.out.println(index);
+					algo.init(game, game.getGameMap());
+					System.out.println(game.getFruits().size());
+					if(game.getFruits().size() != 0)
+					algo.StartAlgo(game.getGameMap().GPSPoint2Pixel(game.getPlayer().getGps()), game.getGameMap().GPSPoint2Pixel(game.getFruits().get(index).getGps()));
 					
-					
-					
-					// > update algo ; || !thereISFruit(algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(algo.shortestPath.size()-1))))
 				}
 				else 
 				{
 					try {
-						Thread.sleep(100);
+						Thread.sleep(50);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -461,6 +470,7 @@ public class MainWindow extends JFrame implements MouseListener
 					if(check(algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0)))))
 					{
 						algo.shortestPath.remove(0);
+						if(algo.shortestPath.size() != 0 )
 						azimuth(game.getPlayer().getGps().y(), game.getPlayer().getGps().x(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).y(),algo.point3DInclude.get(Integer.parseInt(algo.shortestPath.get(0))).x());
 					}
 				}
@@ -475,6 +485,7 @@ public class MainWindow extends JFrame implements MouseListener
 			System.out.println(P);
 			return (Math.abs(p.get_PixelX()-p1.get_PixelX()) < 5) && (Math.abs(p1.get_PixelY()-p.get_PixelY()) < 5) ;
 		}
+		
 		public boolean thereISFruit(Point3D P)
 		{
 			for (int i = 0; i < game.getFruits().size(); i++) 

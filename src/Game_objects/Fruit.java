@@ -16,7 +16,7 @@ public class Fruit extends General{
 	 * @param pixel represents pixel point of the fruit location.
 	 * @param map represents the map.
 	 */
-	public Fruit(Pixel pixel, Map map) 
+	 public Fruit(Pixel pixel, Map map) 
 	{
 		super(pixel, map);
 

@@ -1,8 +1,7 @@
 package Algorithm;
 
 import java.awt.geom.Line2D;
-import java.awt.geom.Line2D.Double;
-import java.awt.geom.Rectangle2D;
+
 import java.util.ArrayList;
 
 import Game_objects.Game;
@@ -52,7 +51,7 @@ public class Algorithem
 	 * @param game represents our game
 	 * @param map represents our map
 	 */
-	void init(Game game , Map map)
+	public void init(Game game , Map map)
 	{
 		PointFinder  PF = new PointFinder() ; 
 		point3DInclude.clear();
@@ -60,7 +59,7 @@ public class Algorithem
 		PixelInclude.clear();
 		Lines.clear();
 		UpdateLines(PixelList);
-		shortestPath = new ArrayList<String>();
+		shortestPath.clear();
 		this.map = map;
 		RemovePoints();
 	}
@@ -71,7 +70,7 @@ public class Algorithem
 	 * @param myLocation represents the player location.
 	 * @param destLocation represents a fruit location.
 	 */
-	public void StartAlgo(Pixel myLocation,Pixel destLocation)
+	public double StartAlgo(Pixel myLocation,Pixel destLocation)
 	{
 
 		System.out.println(myLocation);
@@ -152,7 +151,7 @@ public class Algorithem
 		for(int i=0;i<shortestPath.size();i++) {
 			System.out.print(","+shortestPath.get(i));
 		}
-
+		return b.getDist();
 
 	}
 
@@ -235,7 +234,23 @@ public class Algorithem
 		PixelList = RemoveList ;
 	}
 
-
+	public int findShortest(Game game) {
+		
+		int index = 0 ;
+		double min = Double.MAX_VALUE ; 
+		for (int i = 0; i < game.getFruits().size(); i++) 
+		{
+			init(game, game.getGameMap());
+			
+			double dis =StartAlgo(game.getGameMap().GPSPoint2Pixel(game.getPlayer().getGps()), game.getGameMap().GPSPoint2Pixel(game.getFruits().get(i).getGps()));
+			if(dis < min)
+			{
+				index = i ;
+				min = dis ;
+			}
+		}
+		return index; 
+	}
 
 
 

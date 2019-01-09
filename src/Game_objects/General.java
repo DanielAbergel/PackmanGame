@@ -35,17 +35,17 @@ public class General {
 		this.Gps = map.Pixel2GPSPoint(pixel.get_PixelX(), pixel.get_PixelY());
 	}
 
-	public Point3D getGps() {
+	synchronized public Point3D getGps() {
 		return Gps;
 	}
-	public Pixel getPix() {
+	synchronized public Pixel getPix() {
 		return Pix;
 	}
-	public void setGps(Point3D gps ,Map map) {
+	synchronized public void setGps(Point3D gps ,Map map) {
 		Gps = gps;
 		Pix = map.GPSPoint2Pixel(Gps);	
 	}
-	public void setPix(Pixel pix , Map map) {
+	synchronized public void setPix(Pixel pix , Map map) {
 		Pix = pix;
 		Gps = map.Pixel2GPSPoint(pix.get_PixelX(), pix.get_PixelY());
 	}
