@@ -23,7 +23,7 @@ import Robot.Play;
 public class Ex4_Main_Example {
 	public static void main(String[] args) {
 		// 1) Create a "play" from a file (attached to Ex4)
-		String file_name = "data/Ex4_OOP_example2.csv";
+		String file_name = "data/Ex4_OOP_example5.csv";
 		Play play1 = new Play(file_name);
 		
 		// 2) Set your ID's - of all the group members
@@ -35,9 +35,9 @@ public class Ex4_Main_Example {
 		
 		// 4) get the game-board data
 		ArrayList<String> board_data = play1.getBoard();
-		for(int i=0;i<board_data.size();i++) {
-			System.out.println(board_data.get(i));
-		}
+//		for(int i=0;i<board_data.size();i++) {
+//			System.out.println(board_data.get(i));
+//		}
 		System.out.println();
 		System.out.println("Init Player Location should be set using the bounding box info");
 		
@@ -46,7 +46,7 @@ public class Ex4_Main_Example {
 		
 		// 6) Start the "server"
 		play1.start(); // default max time is 100 seconds (1000*100 ms).
-		
+		System.out.println(play1.getHash1());
 		// 7) "Play" as long as there are "fruits" and time
 	//	for(int i=0;i<10;i++) {
 		int i=0;
@@ -61,9 +61,9 @@ public class Ex4_Main_Example {
 			System.out.println(info);
 		// 7.3) get the game-board current state
 			board_data = play1.getBoard();
-			for(int a=0;a<board_data.size();a++) {
-				System.out.println(board_data.get(a));
-			}
+//			for(int a=0;a<board_data.size();a++) {
+//				System.out.println(board_data.get(a));
+//			}
 			System.out.println();
 		}
 		// 8) stop the server - not needed in the real implementation.

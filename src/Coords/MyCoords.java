@@ -34,7 +34,7 @@ public class MyCoords implements coords_converter  {
 	public double distance2d(Point3D gps0, Point3D gps1) 
 	{
 		double lon_norm=Math.cos(gps0.x()*(Math.PI/180));
-		System.out.println(lon_norm);
+	
 
 		double diff_x=gps1.x()-gps0.x();
 		double diff_y=gps1.y()-gps0.y();

@@ -13,7 +13,7 @@ import Maps.Pixel;
 /**
  * 
  * @author Netanel Ben-Isahar
- *
+ * @author Daniel Abergel
  * this class is responsible of collecting the boxes corners.
  */
 public class PointFinder {
@@ -45,7 +45,7 @@ public class PointFinder {
 		ArrayList<Pixel>  PointPix = new ArrayList<Pixel>();
 		for (int i = 0; i < Points.size(); i++) {
 			PointPix.add(map.GPSPoint2Pixel(Points.get(i)));
-			System.out.println((i+1) % 4);
+			
 			PointPix.get(i).set((i+1) % 4);
 		}
 		
@@ -62,7 +62,7 @@ public class PointFinder {
 	private void addNearPoints(Point3D Min , Point3D Max)
 	{
 		Point3D Vec = Convert.vector3D(Min, Max) ; 
-		System.out.println(Vec);
+	
 		Point3D NearMin = new Point3D(Min.GPS2Meter()) ;
 		Point3D	NearMax	= new Point3D(Min) ; 
 		NearMin.add(Vec.x(), 0);

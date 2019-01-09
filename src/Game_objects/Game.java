@@ -7,7 +7,7 @@ import Maps.Map;
 import Maps.Pixel;
 
 /**
- * 
+ * @author Daniel Abergel
  * @author Netanel Ben-Isahar
  * this class represent a game and hold all of the relevant objects for it.
  */

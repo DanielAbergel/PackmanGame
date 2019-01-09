@@ -16,7 +16,7 @@ import graph.Node;
 /**
  * 
  * @author Netanel Ben-Isahar
- *
+ * @author Daniel Abergel
  *this class is responsible of creating the path that avoid gettiing into the boxes from the player location
  * to a fruit 
  */
@@ -73,12 +73,8 @@ public class Algorithem
 	public double StartAlgo(Pixel myLocation,Pixel destLocation)
 	{
 
-		System.out.println(myLocation);
-		System.out.println(destLocation);
+	
 
-		for (int i = 0; i < PixelList.size(); i++) {
-			System.out.println(PixelList.get(i));
-		}
 		PixelInclude.add(myLocation);
 		PixelInclude.addAll(PixelList);
 		PixelInclude.add(destLocation);
@@ -104,7 +100,7 @@ public class Algorithem
 				{
 					if(DidISeehim(PixelInclude.get(i), PixelInclude.get(j)))
 					{
-						System.out.println(i + ">>" + j );
+//						System.out.println(i + ">>" + j ); if you want to know how the graph look print this .
 						G.addEdge("" + i, "" + j, PixelInclude.get(i).dis(PixelInclude.get(j)));
 					}
 				}
@@ -218,7 +214,7 @@ public class Algorithem
 	private void RemovePoints() {
 		ArrayList<Pixel> RemoveList = new ArrayList<Pixel>(PixelList);
 		for (int i = RemoveList.size()-1; 0 < i; i--) {
-			for (int j = 0; j < PixelList.size(); j++) 
+			for (int j = 0; j < PixelList.size(); j =j+4) 
 			{
 				try {
 					if(RemoveList.get(i).get_PixelX() > PixelList.get(j).get_PixelX() && RemoveList.get(i).get_PixelX() < PixelList.get(j+1).get_PixelX() && RemoveList.get(i).get_PixelY() < PixelList.get(j).get_PixelY() && RemoveList.get(i).get_PixelY() > PixelList.get(j+1).get_PixelY())
@@ -233,6 +229,7 @@ public class Algorithem
 		}
 		PixelList = RemoveList ;
 	}
+
 
 	public int findShortest(Game game) {
 		

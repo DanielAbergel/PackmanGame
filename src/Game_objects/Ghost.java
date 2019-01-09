@@ -4,7 +4,7 @@ import Geom.Point3D;
 import Maps.Map;
 import Maps.Pixel;
 /**
- * 
+ * @author Daniel Abergel
  * @author Netanel Ben-Isahar
  *this class represents and build a ghost object.
  */

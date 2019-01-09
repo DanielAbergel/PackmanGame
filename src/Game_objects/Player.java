@@ -5,7 +5,7 @@ import Maps.Map;
 import Maps.Pixel;
 
 /**
- * 
+ * @author Daniel Abergel
  * @author Netanel Ben-Isahar
  * this class represents and build a player object.
  */

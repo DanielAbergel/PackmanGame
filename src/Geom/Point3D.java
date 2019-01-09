@@ -2,6 +2,7 @@ package Geom;
 
 import java.io.Serializable;
 
+import Coords.MyCoords;
 import Geom.Point3D;
 public class Point3D implements Geom_element, Serializable 
 {
@@ -98,6 +99,12 @@ public class Point3D implements Geom_element, Serializable
 	{
 
 		return ( this.distance3D(p2)< dist );
+	}
+	public boolean close2equals1(Point3D p2, double dist)
+	{
+		MyCoords m = new MyCoords();
+		  double dis= m.distance2d(this,  p2);
+		  return dist > dis ; 
 	}
 
 	public boolean equalsXY (Point3D p)
