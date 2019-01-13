@@ -14,6 +14,7 @@ There are two game options:
 In the algorithm package there is an algorithms:
 - Algorithm - An algorithm that calculates the shortest path between a fruit and a player, and returns the path.
 (The algorithm knows how to avoid boxes that can not be passed through) .
+- PointFinder - Finds all points of the geoBox
 
 ### Coords 
 The Coords package has the:
