@@ -249,40 +249,5 @@ public class Algorithem
 		return index; 
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	public static void main(String[] args) {
-
-		Game game = new Game();
-		Map map = new Map();
-
-		game.getGeoBoxs().add(new GeoBox(new Point3D(35.20552370064878,32.10346280397053,0),new Point3D(35.20727202866246,32.10393044420183,0),map));
-		game.getGeoBoxs().add(new GeoBox(new Point3D(35.206075800165465,32.102943206521985,0),new Point3D(35.20659109643439,32.10354074384279,0),map));
-
-
-
-		Algorithem A = new Algorithem(game,map);
-		A.StartAlgo(map.GPSPoint2Pixel(new Point3D(35.20519244274052,32.10376157384208,0)), map.GPSPoint2Pixel(new Point3D(35.207437661689454,32.10351476387798,0)));
-	}
-	/*
-	 * M,2,32.10376157384208,35.20519244274052,0.0,1.0,1.0
-F,0,32.10351476387798,35.207437661689454,0.0,1.0
-B,11,32.10346280397053,35.20552370064878,0.0,32.10393044420183,35.20727202866246,0.0,1.0
-B,11,32.102943206521985,35.206075800165465,0.0,32.10354074384279,35.20659109643439,0.0,1.0
-	 */
-
 }
 

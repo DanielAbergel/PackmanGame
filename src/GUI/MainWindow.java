@@ -35,7 +35,6 @@ import javax.swing.plaf.FileChooserUI;
 
 import Algorithm.Algorithem;
 
-import Coords.LatLonAlt;
 import DataBase.DataBase;
 import File_format.Board2Game;
 import File_format.Game2CSV;
@@ -402,6 +401,7 @@ public class MainWindow extends JFrame implements MouseListener
 		// TODO Auto-generated method stub
 
 	}
+	/* finds the azimuth angle */
 	public void azimuth(double lat1, double lon1, double lat2, double lon2){
 
 
@@ -476,7 +476,7 @@ public class MainWindow extends JFrame implements MouseListener
 			System.out.println(Server.getStatistics());
 			String[] data = Server.getStatistics().split(",");
 			DataBase DB = new DataBase();
-			double avg = DB.insertDB(Server.getHash1());
+			double avg = DB.getAvg(Server.getHash1());
 			System.out.println("Your Time : " + data[2].substring(6)+ " | Avg Time : " + avg);
 		}
 		public boolean check(Point3D P)
@@ -495,8 +495,8 @@ public class MainWindow extends JFrame implements MouseListener
 			}
 			return false;
 		}
-
 	}
+	
 	public class MyThread extends Thread
 	{
 
@@ -524,7 +524,7 @@ public class MainWindow extends JFrame implements MouseListener
 			System.out.println(Server.getStatistics());
 			String[] data = Server.getStatistics().split(",");
 			DataBase DB = new DataBase();
-			double avg = DB.insertDB(Server.getHash1());
+			double avg = DB.getAvg(Server.getHash1());
 			System.out.println("Your Score : " + data[2].substring(6)+ " | Avg Time : " + avg);
 		}
 	}

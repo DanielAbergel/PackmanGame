@@ -7,10 +7,13 @@ import java.sql.Statement;
 /* from OpenSource */
 public class DataBase {
 	
-	public double insertDB(int ID )
+	/*
+	 * Get AVG from the same map from DB
+	 */
+	public  double getAvg(int ID )
 	{
 		double avg = 0 ;
-		String jdbcUrl="jdbc:mysql://ariel-oop.xyz:3306/oop"; //?useUnicode=yes&characterEncoding=UTF-8&useSSL=false";
+		String jdbcUrl="jdbc:mysql://ariel-oop.xyz:3306/oop?useUnicode=yes&characterEncoding=UTF-8&useSSL=false";
 		String jdbcUser="student";
 		String jdbcPassword="student";
 		
@@ -23,21 +26,12 @@ public class DataBase {
 			Statement statement = connection.createStatement();
 			
 			//select data
-			String allCustomersQuery = "SELECT * FROM logs;";
+			String allCustomersQuery = "SELECT AVG(Point) FROM logs where SomeDouble="+ID;
 			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
-			double sum = 0 ; 
-			int counter = 0 ;
+			resultSet.next();
+
+			avg = resultSet.getDouble(1);
 			
-			while(resultSet.next())
-			{
-				if(resultSet.getInt("SomeDouble") == ID)
-				{
-				sum += Double.parseDouble("" +resultSet.getDouble("Point"));
-				counter ++ ;
-				}
-			}
-			
-			 avg = sum / counter ; 
 			
 			resultSet.close();		
 			statement.close();		
