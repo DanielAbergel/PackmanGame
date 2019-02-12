@@ -42,8 +42,7 @@ Geom package represents shapes in space:
 - Point3D : can represents GPSPoint and vec .
 
 
- #### ClassDiagram
-![software component diagram](https://user-images.githubusercontent.com/44754325/50836257-71973080-1361-11e9-843d-9ed415a7d98b.png)
+
 
  
  
